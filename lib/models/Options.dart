@@ -26,7 +26,7 @@ class Option {
   // fromJson method to create an Option object from a Map
   factory Option.fromJson(Map<String, dynamic> json) {
     return Option(
-      id: json['id'],
+      id: json['id_option'],
       denomination: json['denomination'],
       description: json['description'],
       filiere_id: json['filiere_id'],

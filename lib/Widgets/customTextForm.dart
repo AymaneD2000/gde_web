@@ -5,12 +5,14 @@ class CustomTextField extends StatelessWidget {
   final String labelText;
   final IconData? prefixIcon;
   final bool obscureText;
+  bool? expand;
   final String? Function(String?)? validator;
   final TextInputType keyboardType;
 
-  const CustomTextField({
+  CustomTextField({
     required this.controller,
     required this.labelText,
+    this.expand,
     this.prefixIcon,
     this.obscureText = false,
     this.validator,
@@ -20,6 +22,9 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: expand == null ? 1 : null,
+      minLines: expand == null ? 1 : null,
+      expands: expand ?? false,
       controller: controller,
       decoration: InputDecoration(
         labelText: labelText,

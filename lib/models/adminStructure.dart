@@ -1,5 +1,6 @@
 //import 'package:gde_web/main.dart';
 import 'package:gde_web/models/Structure.dart';
+import 'package:gde_web/models/faculter_model.dart';
 import 'package:uuid/uuid.dart';
 
 class AdminStructure {
@@ -11,10 +12,14 @@ class AdminStructure {
   String genre;
   String telephone;
   String? Photo;
-  String? structure_id;
+  int? structure_id;
+  int? idfaculte;
   Structure? structure;
+  Faculter? faculter;
   AdminStructure(
       {this.structure,
+      this.faculter,
+      this.idfaculte,
       required this.username,
       required this.nom,
       required this.prenom,
@@ -37,7 +42,6 @@ class AdminStructure {
       'telephone': telephone,
       'avatar_url': Photo ?? "",
       'structure_id': structure_id,
-      //'structure':
       //structure?.toJson(), // Assuming Structure has a toJson method
     };
   }
@@ -45,20 +49,17 @@ class AdminStructure {
   // fromJson method to create an AdminStructure object from a Map
   factory AdminStructure.fromJson(Map<String, dynamic> json) {
     return AdminStructure(
-      structure_id: json['structure_id'],
-      username: json['username'],
-      nom: json['nom'],
-      prenom: json['prenom'],
-      password: json['password'],
-      email: json['email'],
-      genre: json['genre'],
-      telephone: json['telephone'],
-      Photo: json['avatar_url'],
-      //structure: Structure.fromJson(json['structure']),
-    );
+        structure_id: json['strucuture_id'],
+        username: json['username'],
+        nom: json['nom'],
+        prenom: json['prenom'],
+        password: json['password'],
+        email: json['email'],
+        genre: json['genre'],
+        telephone: json['telephone'],
+        Photo: json['avatar_url'],
+        idfaculte: json['faculter_id']
+        //structure: Structure.fromJson(json['structure']),
+        );
   }
-
-  // create() async {
-  //   await MyApp.supabase.from('admin_struct').insert(toJson());
-  // }
 }

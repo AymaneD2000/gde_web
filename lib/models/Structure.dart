@@ -1,19 +1,28 @@
 import 'package:gde_web/models/Options.dart';
 import 'package:gde_web/models/Poste.dart';
+import 'package:gde_web/models/faculter_model.dart';
 import 'package:gde_web/models/formation.dart';
 
 class Structure {
-  String id;
+  int id;
   String nom;
+  String sigle;
+  String email;
   String description;
   String typeStructure;
   String logo;
   String localisation;
+  String password;
   List<Publication>? publications;
+  List<Faculter>? faculter;
   List<Formation>? formations;
   List<Option>? options;
 
   Structure({
+    this.faculter,
+    required this.email,
+    required this.password,
+    required this.sigle,
     required this.id,
     this.publications,
     this.formations,
@@ -44,11 +53,15 @@ class Structure {
   // fromJson method to create a Structure object from a Map
   factory Structure.fromJson(Map<String, dynamic> json) {
     return Structure(
-      id: json['id'],
+      faculter: [],
+      password: json['passwd'],
+      email: json['email'],
+      sigle: json['sigle'],
+      id: json['structure_id'],
       nom: json['nom'],
       description: json['description'],
-      typeStructure: json['typeStructure'],
-      logo: json['logo'],
+      typeStructure: json['type'],
+      logo: json['image'],
       localisation: json['localisation'],
       publications: (json['publications'] as List<dynamic>?)
           ?.map((publicationJson) => Publication.fromJson(publicationJson))

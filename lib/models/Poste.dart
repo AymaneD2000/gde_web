@@ -1,15 +1,24 @@
+import 'package:gde_web/models/Structure.dart';
+import 'package:gde_web/models/Videos.dart';
 import 'package:gde_web/models/photos.dart';
+import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
 
 class Publication {
   String idPublication;
   String information;
-  List<Photo>? photo;
+  Structure? structure;
+  DateTime date;
+  List<dynamic>? photo;
+  List<dynamic>? video;
 
-  Publication({
-    required this.information,
-    required this.idPublication,
-    this.photo,
-  });
+  Publication(
+      {this.video,
+      required this.date,
+      required this.information,
+      required this.idPublication,
+      this.photo,
+      this.structure});
 
   // toJson method to convert Publication object to a Map
   Map<String, dynamic> toJson() {
@@ -22,12 +31,15 @@ class Publication {
 
   // fromJson method to create a Publication object from a Map
   factory Publication.fromJson(Map<String, dynamic> json) {
+    DateTime temps = DateTime.parse(json["date"]);
+    String dat = DateFormat('dd/MM/yyyy à HH:mm:ss').format(temps);
     return Publication(
-      idPublication: json['idPublication'],
-      information: json['information'],
-      photo: (json['photo'] as List<dynamic>?)
-          ?.map((photoJson) => Photo.fromJson(photoJson))
-          .toList(),
+      structure: null,
+      date: DateTime.tryParse(json['date'])!,
+      video: [],
+      idPublication: json['id'],
+      information: json['description'],
+      photo: [],
     );
   }
 

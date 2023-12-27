@@ -5,7 +5,7 @@ class Filiere {
   String nom;
   String description;
   String? image;
-  List<Option>? list_option;
+  List<dynamic>? list_option;
   Filiere(
       {this.image,
       required this.id,
@@ -13,7 +13,7 @@ class Filiere {
       required this.nom,
       this.list_option});
 
-  factory Filiere.fromJson(dynamic json) {
+  factory Filiere.fromJson(Map<String, dynamic> json) {
     print(json);
     return Filiere(
         id: json['id_filiere'],
