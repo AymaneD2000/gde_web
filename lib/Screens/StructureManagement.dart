@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gde_web/Widgets/customTextForm.dart';
 import 'package:gde_web/main.dart';
+import 'package:gde_web/models/Structure.dart';
 import 'package:gde_web/models/faculter_model.dart';
 import 'package:gde_web/supabase/supabase_managements.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,8 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController imageController = TextEditingController();
   final TextEditingController localisationController = TextEditingController();
+  final TextEditingController conditionController = TextEditingController();
+  final TextEditingController telephoneController = TextEditingController();
   final supabse_managemet c = Get.put(supabse_managemet());
   String? _avatarUrl;
   File? _imageFile;
@@ -31,12 +34,25 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
   void initState() {
     super.initState();
     // Remplir les contrôleurs avec les valeurs existantes
-    nomController.text = c.admin.first.faculter!.nom;
-    sigleController.text = c.admin.first.faculter!.sigle;
-    emailController.text = c.admin.first.faculter!.email;
-    descriptionController.text = c.admin.first.faculter!.description;
-    imageController.text = c.admin.first.faculter!.image;
-    localisationController.text = c.admin.first.faculter!.localisation;
+    if (c.admin.first.structure == null) {
+      _avatarUrl = c.admin.first.faculter!.image;
+      nomController.text = c.admin.first.faculter!.nom;
+      conditionController.text = c.admin.first.faculter!.accessConditon;
+      sigleController.text = c.admin.first.faculter!.sigle;
+      emailController.text = c.admin.first.faculter!.email;
+      descriptionController.text = c.admin.first.faculter!.description;
+      imageController.text = c.admin.first.faculter!.image;
+      localisationController.text = c.admin.first.faculter!.localisation;
+    } else {
+      _avatarUrl = c.admin.first.structure!.logo;
+      nomController.text = c.admin.first.structure!.nom;
+      conditionController.text = c.admin.first.structure!.accessCondition;
+      sigleController.text = c.admin.first.structure!.sigle;
+      emailController.text = c.admin.first.structure!.email;
+      descriptionController.text = c.admin.first.structure!.description;
+      imageController.text = c.admin.first.structure!.logo;
+      localisationController.text = c.admin.first.structure!.localisation;
+    }
   }
 
   void updateFaculter() {
@@ -47,8 +63,10 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
     String newDescription = descriptionController.text;
     String newImage = imageController.text;
     String newLocalisation = localisationController.text;
+    String access = conditionController.text;
 
     // Mettre à jour l'objet Faculter
+    c.admin.first.faculter!.accessConditon = access;
     c.admin.first.faculter!.nom = newNom;
     c.admin.first.faculter!.sigle = newSigle;
     c.admin.first.faculter!.email = newEmail;
@@ -302,12 +320,12 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                         height: MediaQuery.of(context).size.height * 0.2,
                         child: CustomTextField(
                           expand: true,
-                          controller: descriptionController,
-                          labelText: 'Criteres eligibiter',
+                          controller: conditionController,
+                          labelText: "Condition d'access",
                           prefixIcon: Icons.person,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter Description';
+                              return 'Please enter words';
                             }
                             return null;
                           },
@@ -318,23 +336,41 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () async {
-                      Faculter adminStructure =
-                          Faculter(
-                            idfaculter: c.admin.first.faculter!.idfaculter,
-                            idUniv: c.admin.first.faculter!.idUniv,
-                            image: _avatarUrl!,
-                            localisation:localisationController.text,
-                            sigle: sigleController.text,
-                            description: descriptionController.text,
-                        email: emailController.text,
-                        nom: nomController.text,
-                      );
-                      try {
-                            c.updateFaculter(adminStructure);
-                      } catch (e) {
-                        print("this is sppabase erro $e");
+                      if (c.admin.first.structure == null) {
+                        Faculter adminStructure = Faculter(
+                          accessConditon: conditionController.text,
+                          idfaculter: c.admin.first.faculter!.idfaculter,
+                          idUniv: c.admin.first.faculter!.idUniv,
+                          image: _avatarUrl!,
+                          localisation: localisationController.text,
+                          sigle: sigleController.text,
+                          description: descriptionController.text,
+                          email: emailController.text,
+                          nom: nomController.text,
+                        );
+                        try {
+                          c.updateFaculter(adminStructure);
+                        } catch (e) {
+                          print("this is sppabase erro $e");
+                        }
+                      } else {
+                        Structure adminStructure = Structure(
+                          typeStructure: c.admin.first.structure!.typeStructure,
+                          accessCondition: conditionController.text,
+                          id: c.admin.first.structure!.id,
+                          logo: _avatarUrl!,
+                          localisation: localisationController.text,
+                          sigle: sigleController.text,
+                          description: descriptionController.text,
+                          email: emailController.text,
+                          nom: nomController.text,
+                        );
+                        try {
+                          c.updateStructure(adminStructure);
+                        } catch (e) {
+                          print("this is sppabase erro $e");
+                        }
                       }
-                      Navigator.pop(context);
                     },
                     child: const Text('Register'),
                   ),

@@ -11,6 +11,7 @@ import 'package:gde_web/models/faculte_options.dart';
 import 'package:gde_web/models/faculter_model.dart';
 import 'package:gde_web/models/filiere.dart';
 import 'package:gde_web/models/filiere_structure.dart';
+import 'package:gde_web/models/formation.dart';
 import 'package:gde_web/models/photos.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -21,6 +22,7 @@ import '../models/optionsStructure.dart';
 class supabse_managemet extends GetxController {
   List<AdminStructure> admin = <AdminStructure>[].obs;
   List<Filiere> filiers = <Filiere>[].obs;
+  List<Formation> modules = <Formation>[].obs;
   List<Faculter> faculter = <Faculter>[].obs;
   List<Publication> publiciter = <Publication>[].obs;
   List<FaculteFiliere> faculteFiliere = <FaculteFiliere>[].obs;
@@ -45,13 +47,21 @@ class supabse_managemet extends GetxController {
           .from("faculte")
           .select("*")
           .eq("id_univ", a.structure_id);
+      List<Formation> lismodule = [];
+      final module =
+          await MyApp.supabase.from("module").select("*").eq("id_ctf", s.id);
+      for (final i in module) {
+        lismodule.add(Formation.fromJson(i));
+      }
       List<Faculter> listfaculty = [];
       for (final i in faculty) {
         listfaculty.add(Faculter.fromJson(i));
       }
+      lismodule = lismodule;
       faculter = listfaculty;
       //a.structure.faculter = listfaculty;
       s.faculter = listfaculty;
+      s.formations = lismodule;
       a.structure = s;
       admin.add(a);
       filiers = await getAllFiliere();
@@ -65,15 +75,46 @@ class supabse_managemet extends GetxController {
     }
   }
 
+  Future<List<Formation>> getModules() async {
+    List<Formation> lismodule = [];
+    final module = await MyApp.supabase
+        .from("module")
+        .select("*")
+        .eq("id_ctf", admin.first.structure_id);
+    for (final i in module) {
+      lismodule.add(Formation.fromJson(i));
+    }
+    modules = lismodule;
+    admin.first.structure!.formations = lismodule;
+    return lismodule;
+  }
+
+  updateStructure(Structure struc) async {
+    await MyApp.supabase.from('structure').update({
+      "critere_acces": struc.accessCondition,
+      "description": struc.description,
+      "email": struc.email,
+      "image": struc.logo,
+      "localisation": struc.localisation,
+      "nom": struc.nom,
+      "sigle": struc.sigle
+    }).eq("structure_id", struc.id);
+  }
+
   updateFaculter(Faculter fac) async {
-    await MyApp.supabase.from('faculte').update({
-      "description": fac.description,
-      "email": fac.email,
-      "image": fac.image,
-      "localisation": fac.localisation,
-      "nom": fac.nom,
-      "sigle": fac.sigle
-    }).eq("id_faculte", fac.idfaculter).then((value) => {});
+    await MyApp.supabase
+        .from('faculte')
+        .update({
+          "critere_acces": fac.accessConditon,
+          "description": fac.description,
+          "email": fac.email,
+          "image": fac.image,
+          "localisation": fac.localisation,
+          "nom": fac.nom,
+          "sigle": fac.sigle
+        })
+        .eq("id_faculte", fac.idfaculter)
+        .then((value) => {});
   }
 
   Future<bool> loginFaculty(String email, String password) async {
@@ -104,13 +145,46 @@ class supabse_managemet extends GetxController {
     }
   }
 
-  addStructure(Structure structure, String username) async {
-    final data = await MyApp.supabase
-        .from('structure')
-        .insert(structure.toJson())
-        .select();
-    await MyApp.supabase.from('admin').update({"username": username}).eq(
-        'structure_id', Structure.fromJson(data).id);
+  addStructureModule(Formation formation) async {
+    MyApp.supabase.from("module").insert({
+      "nom_module": formation.nom,
+      "description": formation.description,
+      "duree": formation.duree,
+      "image": formation.image,
+      "id_ctf": formation.idCtf
+    }).whenComplete(() {
+      print("task completed");
+    });
+    admin.first.structure!.formations!.add(formation);
+    getModules();
+    modules.add(formation);
+  }
+
+  updateStructureModule(Formation formation) async {
+    MyApp.supabase
+        .from("module")
+        .insert({
+          "nom_module": formation.nom,
+          "description": formation.description,
+          "duree": formation.duree,
+          "image": formation.image,
+          "id_ctf": formation.idCtf
+        })
+        .eq("id_module", formation.id)
+        .whenComplete(() {
+          print("updated tesk ended");
+        });
+  }
+
+  deleteStructureModule(Formation formation) async {
+    MyApp.supabase
+        .from("module")
+        .delete()
+        .eq("id_module", formation.id)
+        .whenComplete(() {
+      print("Deleted task ended");
+    });
+    getModules();
   }
 
   addPublication(Publication pub, int structureId, List<String> photos,

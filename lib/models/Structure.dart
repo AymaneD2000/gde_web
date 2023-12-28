@@ -12,16 +12,16 @@ class Structure {
   String typeStructure;
   String logo;
   String localisation;
-  String password;
+  String accessCondition;
   List<Publication>? publications;
   List<Faculter>? faculter;
   List<Formation>? formations;
   List<Option>? options;
 
   Structure({
+    required this.accessCondition,
     this.faculter,
     required this.email,
-    required this.password,
     required this.sigle,
     required this.id,
     this.publications,
@@ -34,27 +34,11 @@ class Structure {
     required this.typeStructure,
   });
 
-  // toJson method to convert Structure object to a Map
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'nom': nom,
-      'description': description,
-      'typeStructure': typeStructure,
-      'logo': logo,
-      'localisation': localisation,
-      'publications':
-          publications?.map((publication) => publication.toJson()).toList(),
-      'formations': formations?.map((formation) => formation.toJson()).toList(),
-      'options': options?.map((option) => option.toJson()).toList(),
-    };
-  }
-
   // fromJson method to create a Structure object from a Map
   factory Structure.fromJson(Map<String, dynamic> json) {
     return Structure(
+      accessCondition: json['critere_acces'],
       faculter: [],
-      password: json['passwd'],
       email: json['email'],
       sigle: json['sigle'],
       id: json['structure_id'],

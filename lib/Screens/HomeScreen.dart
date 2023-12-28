@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gde_web/Screens/StructureManagement.dart';
 import 'package:gde_web/Screens/filiereFaculte.dart';
 import 'package:gde_web/Screens/filiersStructure.dart';
+import 'package:gde_web/Screens/listmodulePage.dart';
+import 'package:gde_web/Screens/moduleStructure.dart';
 import 'package:gde_web/Screens/pubpage.dart';
 import 'package:gde_web/models/faculter_model.dart';
 import 'package:gde_web/supabase/supabase_managements.dart';
@@ -24,7 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
     PublicationPage(),
     UpdateFaculterPage(),
     FiliereStructurePage(),
-    FiliereFacultePage()
+    FiliereFacultePage(),
+    ListeModulesPage()
   ];
 
   @override
@@ -107,8 +110,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: buildDrawerItem(Icons.mail, "Manage Structure", 2),
                 ),
                 Expanded(
-                  child: buildDrawerItem(Icons.settings, "Formations",
-                      c.admin.first.faculter == null ? 3 : 4),
+                  child: buildDrawerItem(
+                      Icons.settings,
+                      "Formations",
+                      c.admin.first.structure!.typeStructure ==
+                              "Centre de formation"
+                          ? 5
+                          : (c.admin.first.faculter == null ? 3 : 4)),
                 ),
               ],
             ),
