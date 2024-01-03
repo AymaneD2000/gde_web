@@ -109,7 +109,8 @@ class _ListeModulesPageState extends State<ListeModulesPage> {
         },
       ),
       floatingActionButton: Container(
-          color: Colors.black,
+          decoration: BoxDecoration(
+              color: Colors.blue, borderRadius: BorderRadius.circular(40)),
           child: IconButton(
             icon: Icon(Icons.add),
             onPressed: () {

@@ -48,6 +48,7 @@ class AdminStructure {
 
   // fromJson method to create an AdminStructure object from a Map
   factory AdminStructure.fromJson(Map<String, dynamic> json) {
+    print(json);
     return AdminStructure(
         structure_id: json['strucuture_id'],
         username: json['username'],

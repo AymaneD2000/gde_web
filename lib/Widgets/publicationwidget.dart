@@ -5,13 +5,13 @@ import 'dart:math';
 import 'package:gde_web/models/Poste.dart';
 
 class PublicationWidget extends StatelessWidget {
-  PublicationWidget(
-      {Key? key,
-      required this.username,
-      required this.structureLogo,
-      required this.structureNom,
-      required this.publication})
-      : super(key: key);
+  PublicationWidget({
+    Key? key,
+    required this.username,
+    required this.structureLogo,
+    required this.structureNom,
+    required this.publication,
+  }) : super(key: key);
 
   final String username;
   String structureLogo;
@@ -20,90 +20,106 @@ class PublicationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(width: 2, color: Colors.blue),
-                ),
-                child: ClipOval(
-                  child: Image.network(
-                    structureLogo,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      structureNom,
-                      style: const TextStyle(
-                        overflow: TextOverflow.ellipsis,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 2,
-                    ),
-                    Text(
-                      publication.date.toString(),
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    CText(
-                      username,
-                      color: Colors.grey[800],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            publication.information,
-            style: const TextStyle(
-              fontSize: 16,
+    return SizedBox(
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
             ),
-          ),
-          const SizedBox(height: 16),
-          publication.photo != null ? _buildImageGrid(context) : Container(),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              // _buildButton("Like", Icons.thumb_up),
-              _buildButton("Comment", Icons.comment),
-              const SizedBox(
-                width: 15,
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildUserInfo(),
+            const SizedBox(height: 16),
+            Text(
+              publication.information,
+              style: const TextStyle(
+                fontSize: 16,
               ),
-              _buildButton("Share", Icons.share),
+            ),
+            const SizedBox(height: 16),
+            _buildImageGrid(context),
+            const SizedBox(height: 16),
+            _buildActionButtons(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUserInfo() {
+    return Row(
+      children: [
+        _buildUserAvatar(),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildUserName(),
+              _buildDate(),
+              CText(username, color: Colors.grey[800]),
             ],
           ),
-        ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildUserAvatar() {
+    return Container(
+      width: 80,
+      height: 80,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(width: 2, color: Colors.blue),
       ),
+      child: ClipOval(
+        child: Image.network(
+          structureLogo,
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUserName() {
+    return Text(
+      structureNom,
+      style: const TextStyle(
+        overflow: TextOverflow.ellipsis,
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+      maxLines: 2,
+    );
+  }
+
+  Widget _buildDate() {
+    return Text(
+      publication.date.toString(),
+      style: TextStyle(
+        color: Colors.grey[600],
+      ),
+    );
+  }
+
+  Widget _buildActionButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        _buildButton("Comment", Icons.comment),
+        const SizedBox(width: 15),
+        _buildButton("Share", Icons.share),
+      ],
     );
   }
 

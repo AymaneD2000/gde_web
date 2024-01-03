@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:gde_web/Screens/HomeScreen.dart';
 import 'package:gde_web/Screens/registrationPage.dart';
@@ -49,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text(
+                          const Text(
                             "Connectez-Vous",
                             style: TextStyle(
                               fontSize: 22,
@@ -73,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           SizedBox(
@@ -140,16 +142,18 @@ class _LoginPageState extends State<LoginPage> {
                                 backgroundColor: MaterialStateProperty.all(
                                     Color(0xFF00A8E7))),
                             onPressed: () async {
+                              bool isTrue = false;
                               if (val == "Faculte") {
-                                bool isTrue = await c.loginFaculty(
+                                isTrue = await c.loginFaculty(
                                   emailController.text,
                                   passwordController.text,
                                 );
+
                                 if (isTrue) {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => HomeScreen(),
+                                      builder: (context) => const HomeScreen(),
                                     ),
                                   );
                                 }
@@ -162,13 +166,13 @@ class _LoginPageState extends State<LoginPage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => HomeScreen(),
+                                      builder: (context) => const HomeScreen(),
                                     ),
                                   );
                                 }
                               }
                             },
-                            child: Text(
+                            child: const Text(
                               'Connexion',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 22),
@@ -187,7 +191,7 @@ class _LoginPageState extends State<LoginPage> {
                                             builder: (context) =>
                                                 RegistrationPage()));
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     " Inscrivez-vous ici.",
                                     style: TextStyle(
                                         decoration: TextDecoration.underline,

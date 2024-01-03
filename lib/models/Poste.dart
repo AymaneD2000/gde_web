@@ -7,18 +7,19 @@ import 'package:uuid/uuid.dart';
 class Publication {
   String idPublication;
   String information;
-  Structure? structure;
+  //Structure? structure;
   DateTime date;
   List<dynamic>? photo;
   List<dynamic>? video;
 
-  Publication(
-      {this.video,
-      required this.date,
-      required this.information,
-      required this.idPublication,
-      this.photo,
-      this.structure});
+  Publication({
+    this.video,
+    required this.date,
+    required this.information,
+    required this.idPublication,
+    this.photo,
+    //this.structure
+  });
 
   // toJson method to convert Publication object to a Map
   Map<String, dynamic> toJson() {
@@ -34,7 +35,7 @@ class Publication {
     DateTime temps = DateTime.parse(json["date"]);
     String dat = DateFormat('dd/MM/yyyy à HH:mm:ss').format(temps);
     return Publication(
-      structure: null,
+      //structure: null,
       date: DateTime.tryParse(json['date'])!,
       video: [],
       idPublication: json['id'],

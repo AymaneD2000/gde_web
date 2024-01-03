@@ -17,7 +17,11 @@ class _PublicationPageState extends State<PublicationPage> {
   TextEditingController informationController = TextEditingController();
   List<String> photos = [];
   List<String> videos = [];
+  List<Publication> pubs = [];
   final supabse_managemet c = Get.put(supabse_managemet());
+  uploadPubliciter() async {
+    pubs = c.publiciter;
+  }
 
   Future<void> _uploadImage() async {
     final picker = ImagePicker();
@@ -119,10 +123,12 @@ class _PublicationPageState extends State<PublicationPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    uploadPubliciter();
   }
 
   @override
   Widget build(BuildContext context) {
+    uploadPubliciter();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -132,7 +138,7 @@ class _PublicationPageState extends State<PublicationPage> {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: c.publiciter.length,
+              itemCount: pubs.length,
               itemBuilder: (context, index) {
                 return PublicationWidget(
                   structureNom: c.admin.first.structure == null
@@ -141,65 +147,79 @@ class _PublicationPageState extends State<PublicationPage> {
                   structureLogo: c.admin.first.structure == null
                       ? c.admin.first.faculter!.image
                       : c.admin.first.structure!.logo,
-                  publication: c.publiciter[index],
+                  publication: c.publiciter[pubs.length - index - 1],
                   username: c.admin.first.username,
                 );
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: _uploadImage,
-                  icon: Icon(Icons.photo),
-                  label: Text('Ajouter une photo'),
-                ),
-                SizedBox(height: 8),
-                ElevatedButton.icon(
-                  onPressed: _uploadVideo,
-                  icon: Icon(Icons.videocam),
-                  label: Text('Ajouter une vidéo'),
-                ),
-                SizedBox(height: 16),
-                TextFormField(
-                  controller: informationController,
-                  decoration: InputDecoration(
-                    labelText: 'Exprimez-vous...',
-                    border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.all(12),
-                  ),
-                  maxLines: 4,
-                ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    final id = Uuid().v4();
-                    Publication newPublication = Publication(
-                      date: DateTime.now(),
-                      idPublication: id,
-                      information: informationController.text,
-                    );
-                    try {
-                      c.admin.first.structure == null
-                          ? c.addFacultePublication(newPublication,
-                              c.admin.first.idfaculte!, photos, videos)
-                          : c.addPublication(newPublication,
-                              c.admin.first.structure_id!, photos, videos);
-                    } catch (e) {
-                      print(e);
-                    }
-                    Navigator.pop(context);
-                  },
-                  child: Text('Publier'),
-                ),
-              ],
-            ),
-          )
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            showAboutDialog(context: context, children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: _uploadImage,
+                        icon: Icon(Icons.photo),
+                        label: Text('Ajouter une photo'),
+                      ),
+                      // SizedBox(height: 8),
+                      // ElevatedButton.icon(
+                      //   onPressed: _uploadVideo,
+                      //   icon: Icon(Icons.videocam),
+                      //   label: Text('Ajouter une vidéo'),
+                      // ),
+                      SizedBox(height: 16),
+                      TextFormField(
+                        controller: informationController,
+                        decoration: InputDecoration(
+                          labelText: 'Exprimez-vous...',
+                          border: OutlineInputBorder(),
+                          contentPadding: EdgeInsets.all(12),
+                        ),
+                        maxLines: 4,
+                      ),
+                      SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () {
+                          final id = Uuid().v4();
+                          Publication newPublication = Publication(
+                            date: DateTime.now(),
+                            idPublication: id,
+                            information: informationController.text,
+                          );
+                          try {
+                            c.admin.first.structure == null
+                                ? c.addFacultePublication(newPublication,
+                                    c.admin.first.idfaculte!, photos, videos)
+                                : c.addPublication(
+                                    newPublication,
+                                    c.admin.first.structure_id!,
+                                    photos,
+                                    videos);
+                            pubs.add(newPublication);
+                            setState(() {});
+                          } catch (e) {
+                            print(e);
+                          }
+                          //Navigator.pop(context);
+                        },
+                        child: Text('Publier'),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ]);
+          }),
     );
   }
 }

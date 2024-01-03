@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gde_web/Screens/StructureManagement.dart';
+import 'package:gde_web/Screens/WelcomePage.dart';
 import 'package:gde_web/Screens/filiereFaculte.dart';
 import 'package:gde_web/Screens/filiersStructure.dart';
 import 'package:gde_web/Screens/listmodulePage.dart';
-import 'package:gde_web/Screens/moduleStructure.dart';
 import 'package:gde_web/Screens/pubpage.dart';
-import 'package:gde_web/models/faculter_model.dart';
 import 'package:gde_web/supabase/supabase_managements.dart';
 import 'package:get/get.dart';
 //import 'package:image_network/image_network.dart';
@@ -20,9 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int page = 0;
   final listPage = [
-    Container(
-      color: Colors.red,
-    ),
+    WelcomePage(),
     PublicationPage(),
     UpdateFaculterPage(),
     FiliereStructurePage(),
@@ -34,22 +31,23 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print("in");
   }
 
   final supabse_managemet c = Get.put(supabse_managemet());
-  Widget buildDrawerItem(IconData icon, String title, pages) {
+  Widget buildDrawerItem(String icon, String title, int pages) {
     return ListTile(
-      selectedColor: const Color(0xFFD9D9D9),
-      leading: Icon(
-        icon,
-        size: 30,
-        color: Colors.blueGrey,
+      leading: SizedBox(
+        child: Image.asset(icon),
       ),
       title: Text(
         title,
         style: const TextStyle(fontSize: 16),
       ),
-      trailing: const Icon(Icons.arrow_forward),
+      trailing: Icon(
+        Icons.circle,
+        color: page == pages ? Colors.green : Colors.red,
+      ),
       onTap: () {
         setState(() {
           page = pages;
@@ -61,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: Card(
         child: Row(children: [
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.20,
@@ -101,23 +99,38 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Expanded(
-                  child: buildDrawerItem(Icons.home, "Accueil", 0),
+                  child: buildDrawerItem(
+                      "assets/fluent_home-20-regular.png", "Accueil", 0),
                 ),
                 Expanded(
-                  child: buildDrawerItem(Icons.mail, "Publications", 1),
-                ),
-                Expanded(
-                  child: buildDrawerItem(Icons.mail, "Manage Structure", 2),
+                  child:
+                      buildDrawerItem("assets/bx_box.png", "Publications", 1),
                 ),
                 Expanded(
                   child: buildDrawerItem(
-                      Icons.settings,
-                      "Formations",
-                      c.admin.first.structure!.typeStructure ==
-                              "Centre de formation"
-                          ? 5
-                          : (c.admin.first.faculter == null ? 3 : 4)),
+                      "assets/Mortarboard.png", "Manage Structure", 2),
                 ),
+                Expanded(
+                  child: buildDrawerItem(
+                      "assets/Diploma.png",
+                      "Formations",
+                      c.admin.first.faculter == null
+                          ? (c.admin.first.structure!.typeStructure ==
+                                  "Centre de formation"
+                              ? 5
+                              : 3)
+                          : 4),
+                ),
+                TextButton.icon(
+                    label: const Text(
+                      "Deconnexion",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    onPressed: () {
+                      c.deconnexion();
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.logout_outlined))
               ],
             ),
           ),
@@ -130,11 +143,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Icon(
-                        Icons.chat,
-                        size: 20,
-                        color: Colors.blue,
-                      ),
                       Text(
                         c.admin.first.structure == null
                             ? c.admin.first.faculter!.sigle
@@ -142,6 +150,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 25),
                       ),
+                      SizedBox(
+                          height: 50,
+                          width: 50,
+                          child: Image.asset("assets/gdeLasticon.jpg")),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.2,
                         child: ListTile(

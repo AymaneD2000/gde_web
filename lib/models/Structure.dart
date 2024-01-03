@@ -47,15 +47,9 @@ class Structure {
       typeStructure: json['type'],
       logo: json['image'],
       localisation: json['localisation'],
-      publications: (json['publications'] as List<dynamic>?)
-          ?.map((publicationJson) => Publication.fromJson(publicationJson))
-          .toList(),
-      formations: (json['formations'] as List<dynamic>?)
-          ?.map((formationJson) => Formation.fromJson(formationJson))
-          .toList(),
-      options: (json['options'] as List<dynamic>?)
-          ?.map((optionJson) => Option.fromJson(optionJson))
-          .toList(),
+      publications: [],
+      formations: [],
+      options: [],
     );
   }
 

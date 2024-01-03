@@ -148,18 +148,6 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Utiliser un champ de texte stylisé
-              // StyledTextField(controller: nomController, label: 'Nom'),
-              // StyledTextField(controller: sigleController, label: 'Sigle'),
-              // StyledTextField(controller: emailController, label: 'Email'),
-              // StyledTextField(
-              //     controller: descriptionController, label: 'Description'),
-              // StyledTextField(controller: imageController, label: 'Image'),
-              // StyledTextField(
-              //     controller: localisationController, label: 'Localisation'),
-              // SizedBox(height: 16.0),
-              // // Utiliser un bouton stylisé
-              // StyledButton(onPressed: updateFaculter, label: 'Mettre à jour'),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 //crossAxisAlignment: CrossAxisAlignment.center,
@@ -171,7 +159,7 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                         onPressed: _upload,
                         child: _imageFile == null
                             ? const Text("Sélectionner un logo")
-                            : const Text("logo sélectionner"),
+                            : const Text("Logo sélectionner"),
                       ),
                     ],
                   ),
@@ -182,7 +170,7 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.height * 0.08,
+                        height: MediaQuery.of(context).size.height * 0.1,
                         child: CustomTextField(
                           controller: nomController,
                           labelText: 'Nom',
@@ -198,7 +186,7 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                       const SizedBox(width: 20),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.height * 0.08,
+                        height: MediaQuery.of(context).size.height * 0.1,
                         child: CustomTextField(
                           controller: sigleController,
                           labelText: 'Sigle',
@@ -219,7 +207,7 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.height * 0.08,
+                        height: MediaQuery.of(context).size.height * 0.1,
                         child: CustomTextField(
                           controller: localisationController,
                           labelText: 'Password',
@@ -236,7 +224,7 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                       const SizedBox(width: 20),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.height * 0.08,
+                        height: MediaQuery.of(context).size.height * 0.1,
                         child: CustomTextField(
                           controller: emailController,
                           labelText: 'Email',
@@ -260,11 +248,11 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.height * 0.08,
+                        height: MediaQuery.of(context).size.height * 0.1,
                         child: CustomTextField(
-                          controller: emailController,
-                          labelText: 'Email',
-                          prefixIcon: Icons.email,
+                          controller: localisationController,
+                          labelText: 'Localisation',
+                          prefixIcon: Icons.location_city,
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {
                             if (value == null ||
@@ -279,9 +267,9 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                       const SizedBox(width: 20),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.height * 0.08,
+                        height: MediaQuery.of(context).size.height * 0.1,
                         child: CustomTextField(
-                          controller: emailController,
+                          controller: telephoneController,
                           labelText: 'Telephone',
                           prefixIcon: Icons.phone,
                           validator: (value) {
@@ -300,7 +288,7 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.height * 0.2,
+                        height: MediaQuery.of(context).size.height * 0.3,
                         child: CustomTextField(
                           expand: true,
                           controller: descriptionController,
@@ -317,7 +305,7 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                       const SizedBox(width: 20),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.height * 0.2,
+                        height: MediaQuery.of(context).size.height * 0.3,
                         child: CustomTextField(
                           expand: true,
                           controller: conditionController,

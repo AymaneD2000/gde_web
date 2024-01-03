@@ -29,6 +29,18 @@ class supabse_managemet extends GetxController {
   List<FaculteOptions> faculteOptions = <FaculteOptions>[].obs;
   List<FiliereStructure> filierestructure = <FiliereStructure>[].obs;
   List<OptionsStructure> optionsStructure = <OptionsStructure>[].obs;
+  deconnexion() async {
+    // admin = [];
+    // filiers = [];
+    // modules = [];
+    // faculter = [];
+    // publiciter = [];
+    // faculteFiliere = [];
+    // faculteOptions = [];
+    // filierestructure = [];
+    // optionsStructure = [];
+  }
+
   Future<bool> loginStructure(String email, String password) async {
     try {
       final ad = await MyApp.supabase
@@ -38,6 +50,7 @@ class supabse_managemet extends GetxController {
           .eq("password", password);
       final list = ad.map((e) => AdminStructure.fromJson(e));
       final a = list.first;
+      print("admin");
       final struct = await MyApp.supabase
           .from("structure")
           .select("*")
@@ -62,12 +75,12 @@ class supabse_managemet extends GetxController {
       //a.structure.faculter = listfaculty;
       s.faculter = listfaculty;
       s.formations = lismodule;
+      s.publications = await getPublication(a.structure_id);
       a.structure = s;
       admin.add(a);
       filiers = await getAllFiliere();
       filierestructure = await getFiliereStructure();
       optionsStructure = await getOptionsStructure();
-      await getPublication(a.structure_id);
       return true;
     } catch (e) {
       print(e);
@@ -132,12 +145,12 @@ class supabse_managemet extends GetxController {
           .eq("id_faculte", a.idfaculte);
       final s = struct.map((e) => Faculter.fromJson(e)).first;
       //a.structure.faculter = listfaculty;
+      s.publications = await getFacultePublication(a.idfaculte);
       a.faculter = s;
       admin.add(a);
       filiers = await getAllFiliere();
       faculteFiliere = await getFiliereFaculte();
       faculteOptions = await getOptionsFaculte();
-      await getFacultePublication(a.idfaculte);
       return true;
     } catch (e) {
       print(e);
@@ -259,13 +272,16 @@ class supabse_managemet extends GetxController {
     }
   }
 
-  getPublication(int idStructure) async {
+  Future<List<Publication>> getPublication(int idStructure) async {
     final ad = await MyApp.supabase
         .from("publication")
         .select("*")
         .eq("structure_id", idStructure);
-    final list = ad.map((e) => Publication.fromJson(e));
-    final a = list.toList();
+    List<Publication> list = [];
+    for (final i in ad) {
+      list.add(Publication.fromJson(i));
+    }
+    final a = list;
     for (final i in a) {
       final img = await MyApp.supabase
           .from("image")
@@ -281,17 +297,19 @@ class supabse_managemet extends GetxController {
       i.photo = imgList;
       publiciter.add(i as Publication);
     }
-    //publiciter = a;
-    //return a;
+    return a;
   }
 
-  getFacultePublication(int idStructure) async {
+  Future<List<Publication>> getFacultePublication(int idStructure) async {
     final ad = await MyApp.supabase
         .from("publication")
         .select("*")
         .eq("faculte_id", idStructure);
-    final list = ad.map((e) => Publication.fromJson(e));
-    final a = list.toList();
+    List<Publication> list = [];
+    for (final i in ad) {
+      list.add(Publication.fromJson(i));
+    }
+    List<Publication> a = list;
     for (final i in a) {
       final img = await MyApp.supabase
           .from("image")
@@ -308,7 +326,7 @@ class supabse_managemet extends GetxController {
       publiciter.add(i as Publication);
     }
     //publiciter = a;
-    //return a;
+    return a;
   }
 
   Future<List<FiliereStructure>> getFiliereStructure() async {

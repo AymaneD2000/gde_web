@@ -1,3 +1,5 @@
+import 'package:gde_web/models/Poste.dart';
+
 class Faculter {
   int idfaculter;
   String nom;
@@ -8,8 +10,10 @@ class Faculter {
   String localisation;
   int idUniv;
   String accessConditon;
+  List<Publication>? publications;
   Faculter(
       {required this.description,
+      this.publications,
       required this.accessConditon,
       required this.email,
       required this.idUniv,
@@ -20,7 +24,8 @@ class Faculter {
       required this.sigle});
   factory Faculter.fromJson(Map<String, dynamic> json) {
     return Faculter(
-        accessConditon: json["critere_acces"],
+        publications: [],
+        accessConditon: json["critere_acces"] ?? "",
         description: json["description"],
         email: json["email"],
         idUniv: json["id_univ"],
