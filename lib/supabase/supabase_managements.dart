@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, avoid_print
 
 import 'package:gde_web/main.dart';
 import 'package:gde_web/models/Options.dart';
@@ -287,7 +287,11 @@ class supabse_managemet extends GetxController {
           .from("image")
           .select("*")
           .eq("id_pub", i.idPublication);
-      final imgList = img.map((e) => Photo.fromJson(e)).toList();
+      List<Photo> imgList = [];
+      for (final j in img) {
+        imgList.add(Photo.fromJson(j));
+      }
+      //img.map((e) => Photo.fromJson(e)).toList();
       final vdo = await MyApp.supabase
           .from("video")
           .select("*")
@@ -295,7 +299,7 @@ class supabse_managemet extends GetxController {
       final vdoList = vdo.map((e) => Video.fromJson(e)).toList();
       i.video = vdoList;
       i.photo = imgList;
-      publiciter.add(i as Publication);
+      publiciter.add(i);
     }
     return a;
   }
@@ -315,7 +319,11 @@ class supabse_managemet extends GetxController {
           .from("image")
           .select("*")
           .eq("id_pub", i.idPublication);
-      final imgList = img.map((e) => Photo.fromJson(e)).toList();
+      List<Photo> imgList = [];
+      for (final j in img) {
+        imgList.add(Photo.fromJson(j));
+      }
+      //final imgList = img.map((e) => Photo.fromJson(e)).toList();
       final vdo = await MyApp.supabase
           .from("video")
           .select("*")
@@ -323,7 +331,7 @@ class supabse_managemet extends GetxController {
       final vdoList = vdo.map((e) => Video.fromJson(e)).toList();
       i.video = vdoList;
       i.photo = imgList;
-      publiciter.add(i as Publication);
+      publiciter.add(i);
     }
     //publiciter = a;
     return a;
@@ -353,9 +361,9 @@ class supabse_managemet extends GetxController {
 
   Future<List<OptionsStructure>> getOptionsStructure() async {
     List<OptionsStructure> file = [];
-    final list_options =
+    final listOptions =
         await MyApp.supabase.from("structure_options").select('*');
-    for (final i in list_options) {
+    for (final i in listOptions) {
       final a = OptionsStructure.fromJson(i);
       file.add(a);
     }

@@ -1,8 +1,12 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gde_web/models/Structure.dart';
 
 class StructureForm extends StatefulWidget {
+  const StructureForm({super.key});
+
   @override
   _StructureFormState createState() => _StructureFormState();
 }
@@ -14,7 +18,7 @@ class _StructureFormState extends State<StructureForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Formulaire de Structure'),
+        title: const Text('Formulaire de Structure'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -24,15 +28,16 @@ class _StructureFormState extends State<StructureForm> {
             children: [
               FormBuilderTextField(
                 name: 'nom',
-                decoration: InputDecoration(labelText: 'Nom'),
+                decoration: const InputDecoration(labelText: 'Nom'),
               ),
               FormBuilderTextField(
                 name: 'description',
-                decoration: InputDecoration(labelText: 'Description'),
+                decoration: const InputDecoration(labelText: 'Description'),
               ),
               FormBuilderDropdown(
                 name: 'typeStructure',
-                decoration: InputDecoration(labelText: 'Type de Structure'),
+                decoration:
+                    const InputDecoration(labelText: 'Type de Structure'),
                 items: ['Institut', 'Université', 'Centre de Formation']
                     .map((type) =>
                         DropdownMenuItem(value: type, child: Text(type)))
@@ -41,15 +46,15 @@ class _StructureFormState extends State<StructureForm> {
 
               FormBuilderTextField(
                 name: 'logo',
-                decoration: InputDecoration(labelText: 'Logo'),
+                decoration: const InputDecoration(labelText: 'Logo'),
               ),
               FormBuilderTextField(
                 name: 'localisation',
-                decoration: InputDecoration(labelText: 'Localisation'),
+                decoration: const InputDecoration(labelText: 'Localisation'),
               ),
               // Ajoutez ici d'autres champs selon vos besoins
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.saveAndValidate()) {
@@ -72,7 +77,7 @@ class _StructureFormState extends State<StructureForm> {
                     // print(newStructure);
                   }
                 },
-                child: Text('Enregistrer'),
+                child: const Text('Enregistrer'),
               ),
             ],
           ),

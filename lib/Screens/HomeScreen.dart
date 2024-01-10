@@ -19,19 +19,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int page = 0;
   final listPage = [
-    WelcomePage(),
-    PublicationPage(),
-    UpdateFaculterPage(),
+    const WelcomePage(),
+    const PublicationPage(),
+    const UpdateFaculterPage(),
     FiliereStructurePage(),
     FiliereFacultePage(),
-    ListeModulesPage()
+    const ListeModulesPage()
   ];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("in");
   }
 
   final supabse_managemet c = Get.put(supabse_managemet());
@@ -130,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       c.deconnexion();
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.logout_outlined))
+                    icon: const Icon(Icons.logout_outlined))
               ],
             ),
           ),

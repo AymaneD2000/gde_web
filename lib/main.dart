@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gde_web/Screens/HomeScreen.dart';
 import 'package:gde_web/Screens/loginPage.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -11,13 +10,14 @@ Future<void> main() async {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlocnR5eXhieWtkZ3htaWFoendzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk5MDY1MTcsImV4cCI6MjAxNTQ4MjUxN30.SnLCAAJwMK2gELbjE_g2WW92q7RXrO7kkn3n3PSZLCk',
   );
 
-  runApp(GetMaterialApp(home: MyApp()));
+  runApp(
+      const GetMaterialApp(debugShowCheckedModeBanner: false, home: MyApp()));
 }
 
 // Get a reference your Supabase client
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
   static final supabase = Supabase.instance.client;
 
   // This widget is the root of your application.
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginPage(),
+      home: const LoginPage(),
     );
   }
 }

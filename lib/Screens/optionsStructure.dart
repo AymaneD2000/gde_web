@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:gde_web/models/options.dart';
 import 'package:gde_web/models/filiere.dart';
@@ -7,7 +9,7 @@ import 'package:get/get.dart';
 class OptionsPage extends StatefulWidget {
   final Filiere filiere;
   final int idStructure;
-  OptionsPage(this.filiere, this.idStructure);
+  const OptionsPage(this.filiere, this.idStructure, {super.key});
 
   @override
   _OptionsPageState createState() => _OptionsPageState();
@@ -20,7 +22,7 @@ class _OptionsPageState extends State<OptionsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gérer Options'),
+        title: const Text('Gérer Options'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -29,12 +31,12 @@ class _OptionsPageState extends State<OptionsPage> {
           children: [
             Text(
               'Options de la filière ${widget.filiere.nom}',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             Expanded(
               child: ListView.builder(
                 itemCount: widget.filiere.list_option!.length,
@@ -48,11 +50,11 @@ class _OptionsPageState extends State<OptionsPage> {
 
                   return Card(
                     elevation: 3.0,
-                    margin: EdgeInsets.symmetric(vertical: 8.0),
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
                     child: ListTile(
                       title: Text(
                         option.denomination,
-                        style: TextStyle(fontSize: 18.0),
+                        style: const TextStyle(fontSize: 18.0),
                       ),
                       trailing: IconButton(
                         icon: Icon(

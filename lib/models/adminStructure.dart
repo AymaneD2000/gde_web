@@ -1,7 +1,6 @@
 //import 'package:gde_web/main.dart';
 import 'package:gde_web/models/Structure.dart';
 import 'package:gde_web/models/faculter_model.dart';
-import 'package:uuid/uuid.dart';
 
 class AdminStructure {
   String username;

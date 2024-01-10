@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gde_web/Widgets/genderSelectableform.dart';
@@ -6,9 +8,10 @@ import 'package:gde_web/main.dart';
 import 'package:gde_web/models/AdminStructure.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:uuid/uuid.dart';
 
 class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({super.key});
+
   @override
   _RegistrationPageState createState() => _RegistrationPageState();
 }
@@ -49,7 +52,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             bytes,
             fileOptions: FileOptions(contentType: imageFile.mimeType),
           );
-      print(bytes);
+      //print(bytes);
       _avatarUrl = await MyApp.supabase.storage
           .from('avatars')
           .createSignedUrl(filePath, 60 * 60 * 24 * 365 * 10);

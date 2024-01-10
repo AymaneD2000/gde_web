@@ -100,7 +100,7 @@ class _AjouterModulePageState extends State<AjouterModulePage> {
                         _imageFile!,
                         fit: BoxFit.cover,
                       )
-                    : Center(
+                    : const Center(
                         child: Icon(
                           Icons.camera_alt,
                           size: 40,

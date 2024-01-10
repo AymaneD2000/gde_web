@@ -1,5 +1,6 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
-import 'package:gde_web/models/options.dart';
 import 'package:gde_web/models/filiere.dart';
 import 'package:gde_web/supabase/supabase_managements.dart';
 import 'package:get/get.dart';
@@ -7,7 +8,7 @@ import 'package:get/get.dart';
 class OptionsFacultePage extends StatefulWidget {
   final Filiere filiere;
   final int idStructure;
-  OptionsFacultePage(this.filiere, this.idStructure);
+  const OptionsFacultePage(this.filiere, this.idStructure, {super.key});
 
   @override
   _OptionsFacultePageState createState() => _OptionsFacultePageState();
@@ -20,7 +21,7 @@ class _OptionsFacultePageState extends State<OptionsFacultePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gérer Options'),
+        title: const Text('Gérer Options'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -29,12 +30,12 @@ class _OptionsFacultePageState extends State<OptionsFacultePage> {
           children: [
             Text(
               'Options de la filière ${widget.filiere.nom}',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             Expanded(
               child: ListView.builder(
                 itemCount: widget.filiere.list_option!.length,
@@ -48,11 +49,11 @@ class _OptionsFacultePageState extends State<OptionsFacultePage> {
 
                   return Card(
                     elevation: 3.0,
-                    margin: EdgeInsets.symmetric(vertical: 8.0),
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
                     child: ListTile(
                       title: Text(
                         option.denomination,
-                        style: TextStyle(fontSize: 18.0),
+                        style: const TextStyle(fontSize: 18.0),
                       ),
                       trailing: IconButton(
                         icon: Icon(

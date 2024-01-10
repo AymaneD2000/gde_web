@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gde_web/Widgets/customTextForm.dart';
 import 'package:gde_web/main.dart';
@@ -28,7 +30,7 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
   final TextEditingController telephoneController = TextEditingController();
   final supabse_managemet c = Get.put(supabse_managemet());
   String? _avatarUrl;
-  File? _imageFile;
+  Uint8List? _imageFile;
 
   @override
   void initState() {
@@ -94,7 +96,7 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
     if (imageFile == null) {
       return;
     }
-    _imageFile = File(imageFile.path);
+    _imageFile = File(imageFile.path).readAsBytesSync();
     setState(() {});
 
     try {
@@ -107,7 +109,7 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
             bytes,
             fileOptions: FileOptions(contentType: imageFile.mimeType),
           );
-      print(bytes);
+      //print(bytes);
       _avatarUrl = await MyApp.supabase.storage
           .from('avatars')
           .createSignedUrl(filePath, 60 * 60 * 24 * 365 * 10);
@@ -139,7 +141,65 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Modifier Faculté'),
+        actions: [
+          ElevatedButton(
+            onPressed: () async {
+              if (c.admin.first.structure == null) {
+                Faculter adminStructure = Faculter(
+                  accessConditon: conditionController.text,
+                  idfaculter: c.admin.first.faculter!.idfaculter,
+                  idUniv: c.admin.first.faculter!.idUniv,
+                  image: _avatarUrl!,
+                  localisation: localisationController.text,
+                  sigle: sigleController.text,
+                  description: descriptionController.text,
+                  email: emailController.text,
+                  nom: nomController.text,
+                );
+                try {
+                  c.updateFaculter(adminStructure);
+                } catch (e) {
+                  print("this is sppabase erro $e");
+                }
+              } else {
+                Structure adminStructure = Structure(
+                  typeStructure: c.admin.first.structure!.typeStructure,
+                  accessCondition: conditionController.text,
+                  id: c.admin.first.structure!.id,
+                  logo: _avatarUrl!,
+                  localisation: localisationController.text,
+                  sigle: sigleController.text,
+                  description: descriptionController.text,
+                  email: emailController.text,
+                  nom: nomController.text,
+                );
+                try {
+                  c.updateStructure(adminStructure);
+                } catch (e) {
+                  print("this is sppabase erro $e");
+                }
+              }
+            },
+            child: const Text('Register'),
+          ),
+        ],
+        automaticallyImplyLeading: false,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              "assets/Edit.png",
+              color: Colors.white,
+              width: 24,
+              height: 33,
+            ),
+            const SizedBox(
+              width: 30,
+            ),
+            const Text('Modifier Faculté'),
+          ],
+        ),
         backgroundColor: Colors.blue, // Changer la couleur de l'app bar
       ),
       body: SingleChildScrollView(
@@ -152,18 +212,88 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 //crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton(
-                        onPressed: _upload,
-                        child: _imageFile == null
-                            ? const Text("Sélectionner un logo")
-                            : const Text("Logo sélectionner"),
+                      Column(
+                        children: [
+                          const Text(
+                            "Logo",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                                color: Colors.blue),
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              await _upload();
+                            },
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              width: MediaQuery.of(context).size.width * 0.2,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.grey[200],
+                              ),
+                              child: _imageFile != null
+                                  ? Image.memory(
+                                      _imageFile!,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Center(
+                                      child: Image.network(_avatarUrl!),
+                                    ),
+                            ),
+                          ),
+                        ],
                       ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.2,
+                            child: Column(
+                              children: [
+                                const Text(
+                                  "Information",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22,
+                                      color: Colors.blue),
+                                ),
+                                EasyRichText(
+                                  nomController.text + sigleController.text,
+                                  multiLine: true,
+                                  textAlign: TextAlign.center,
+                                ),
+                                EasyRichText("Email: ${emailController.text}")
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.2,
+                            child: Column(
+                              children: [
+                                const Text(
+                                  "Description",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22,
+                                      color: Colors.blue),
+                                ),
+                                EasyRichText(
+                                  descriptionController.text,
+                                  textAlign: TextAlign.justify,
+                                  maxLines: null,
+                                  multiLine: true,
+                                  //overflow: TextOverflow.ellipsis,
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      )
                     ],
                   ),
-                  const SizedBox(height: 20),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -210,12 +340,14 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                         height: MediaQuery.of(context).size.height * 0.1,
                         child: CustomTextField(
                           controller: localisationController,
-                          labelText: 'Password',
-                          prefixIcon: Icons.lock,
-                          obscureText: true,
+                          labelText: 'Localisation',
+                          prefixIcon: Icons.location_city,
+                          keyboardType: TextInputType.emailAddress,
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a localisation';
+                            if (value == null ||
+                                value.isEmpty ||
+                                !value.contains('@')) {
+                              return 'Please enter a valid email address';
                             }
                             return null;
                           },
@@ -240,46 +372,6 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                           },
                         ),
                       )
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        child: CustomTextField(
-                          controller: localisationController,
-                          labelText: 'Localisation',
-                          prefixIcon: Icons.location_city,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (value) {
-                            if (value == null ||
-                                value.isEmpty ||
-                                !value.contains('@')) {
-                              return 'Please enter a valid email address';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        child: CustomTextField(
-                          controller: telephoneController,
-                          labelText: 'Telephone',
-                          prefixIcon: Icons.phone,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your telephone number';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -322,46 +414,6 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () async {
-                      if (c.admin.first.structure == null) {
-                        Faculter adminStructure = Faculter(
-                          accessConditon: conditionController.text,
-                          idfaculter: c.admin.first.faculter!.idfaculter,
-                          idUniv: c.admin.first.faculter!.idUniv,
-                          image: _avatarUrl!,
-                          localisation: localisationController.text,
-                          sigle: sigleController.text,
-                          description: descriptionController.text,
-                          email: emailController.text,
-                          nom: nomController.text,
-                        );
-                        try {
-                          c.updateFaculter(adminStructure);
-                        } catch (e) {
-                          print("this is sppabase erro $e");
-                        }
-                      } else {
-                        Structure adminStructure = Structure(
-                          typeStructure: c.admin.first.structure!.typeStructure,
-                          accessCondition: conditionController.text,
-                          id: c.admin.first.structure!.id,
-                          logo: _avatarUrl!,
-                          localisation: localisationController.text,
-                          sigle: sigleController.text,
-                          description: descriptionController.text,
-                          email: emailController.text,
-                          nom: nomController.text,
-                        );
-                        try {
-                          c.updateStructure(adminStructure);
-                        } catch (e) {
-                          print("this is sppabase erro $e");
-                        }
-                      }
-                    },
-                    child: const Text('Register'),
-                  ),
                 ],
               ),
             ],
@@ -377,7 +429,8 @@ class StyledTextField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
 
-  const StyledTextField({required this.controller, required this.label});
+  const StyledTextField(
+      {super.key, required this.controller, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -398,19 +451,19 @@ class StyledButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String label;
 
-  const StyledButton({required this.onPressed, required this.label});
+  const StyledButton({super.key, required this.onPressed, required this.label});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      child: Text(
-        label,
-        style: const TextStyle(fontSize: 18.0),
-      ),
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(
             vertical: 16.0), // Ajuster l'espacement interne du bouton
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(fontSize: 18.0),
       ),
     );
   }

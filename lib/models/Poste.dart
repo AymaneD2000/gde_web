@@ -9,7 +9,7 @@ class Publication {
   String information;
   //Structure? structure;
   DateTime date;
-  List<dynamic>? photo;
+  List<Photo>? photo;
   List<dynamic>? video;
 
   Publication({

@@ -8,7 +8,7 @@ import 'package:gde_web/supabase/supabase_managements.dart';
 import 'package:get/get.dart';
 
 class FiliereFacultePage extends StatefulWidget {
-  FiliereFacultePage();
+  const FiliereFacultePage({super.key});
   @override
   State<FiliereFacultePage> createState() => _FiliereFacultePageState();
 }
@@ -38,7 +38,7 @@ class _FiliereFacultePageState extends State<FiliereFacultePage> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text('Filières et Options'),
+          title: const Text('Filières et Options'),
         ),
         body: DynamicHeightGridView(
             itemCount: filieres.length,
@@ -101,7 +101,7 @@ class _FiliereFacultePageState extends State<FiliereFacultePage> {
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 const Text('Options:'),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.15,
@@ -121,7 +121,7 @@ class _FiliereFacultePageState extends State<FiliereFacultePage> {
                               Icons.check_circle,
                               color: optAded ? Colors.green : Colors.grey,
                             ),
-                            SizedBox(width: 8.0),
+                            const SizedBox(width: 8.0),
                             Text(
                               _truncateDenomination(option[index].denomination),
                               maxLines: 1,
@@ -132,7 +132,7 @@ class _FiliereFacultePageState extends State<FiliereFacultePage> {
                       }),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

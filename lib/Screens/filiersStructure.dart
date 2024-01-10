@@ -1,13 +1,14 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gde_web/Screens/optionsStructure.dart';
-import 'package:gde_web/models/Options.dart';
 import 'package:gde_web/models/filiere.dart';
 import 'package:gde_web/models/filiere_structure.dart';
 import 'package:gde_web/supabase/supabase_managements.dart';
 import 'package:get/get.dart';
 
 class FiliereStructurePage extends StatefulWidget {
+  const FiliereStructurePage({super.key});
+
   @override
   State<FiliereStructurePage> createState() => _FiliereStructurePageState();
 }
@@ -36,7 +37,7 @@ class _FiliereStructurePageState extends State<FiliereStructurePage> {
     _loadData();
     return Scaffold(
         appBar: AppBar(
-          title: Text('Filières et Options'),
+          title: const Text('Filières et Options'),
         ),
         body: DynamicHeightGridView(
             itemCount: filieres.length,
@@ -63,12 +64,12 @@ class _FiliereStructurePageState extends State<FiliereStructurePage> {
 
   Widget _buildFiliereCard(Filiere filiere) {
     bool isAdded = false;
-    filieres_structure.forEach((element) {
+    for (var element in filieres_structure) {
       if (element.id_filiere == filiere.id &&
           element.id_structure == c.admin.first.structure_id) {
         isAdded = true;
       }
-    });
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,19 +88,19 @@ class _FiliereStructurePageState extends State<FiliereStructurePage> {
               children: [
                 Text(
                   filiere.nom,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 Text(
                   _truncateDescription(filiere.description),
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                 ),
-                SizedBox(height: 8.0),
-                Text('Options:'),
+                const SizedBox(height: 8.0),
+                const Text('Options:'),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.15,
                   child: ListView.builder(
@@ -118,7 +119,7 @@ class _FiliereStructurePageState extends State<FiliereStructurePage> {
                               Icons.check_circle,
                               color: optAded ? Colors.green : Colors.grey,
                             ),
-                            SizedBox(width: 8.0),
+                            const SizedBox(width: 8.0),
                             Text(
                               _truncateDenomination(option[index].denomination),
                               maxLines: 1,
@@ -129,12 +130,12 @@ class _FiliereStructurePageState extends State<FiliereStructurePage> {
                       }),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        isAdded ? 'Ajouté à l\'université' : 'Non ajouté',
+                        isAdded ? 'Ajouté' : 'Non ajouté',
                         style: TextStyle(
                           color: isAdded ? Colors.green : Colors.red,
                           fontWeight: FontWeight.bold,

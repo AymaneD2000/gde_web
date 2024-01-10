@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:gde_web/Widgets/publicationwidget.dart';
 import 'package:gde_web/main.dart';
@@ -9,6 +11,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 class PublicationPage extends StatefulWidget {
+  const PublicationPage({super.key});
+
   @override
   _PublicationPageState createState() => _PublicationPageState();
 }
@@ -46,7 +50,7 @@ class _PublicationPageState extends State<PublicationPage> {
             .from('photo_video_pub')
             .createSignedUrl(filePath, 60 * 60 * 24 * 365 * 10));
         //widget.onUpload(imageUrlResponse);
-        print(photos.length);
+        //print(photos.length);
       } on StorageException catch (error) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -67,56 +71,6 @@ class _PublicationPageState extends State<PublicationPage> {
         }
       }
     }
-
-    //setState(() => _isLoading = false);
-  }
-
-  Future<void> _uploadVideo() async {
-    final picker = ImagePicker();
-
-    final lifFile =
-        await picker.pickMultipleMedia(maxWidth: 300, maxHeight: 300);
-    if (lifFile == []) {
-      return;
-    }
-    //setState(() => _isLoading = true);
-    for (final imageFile in lifFile) {
-      try {
-        final bytes = await imageFile.readAsBytes();
-        final fileExt = imageFile.path.split('.').last;
-        final fileName = '${DateTime.now().toIso8601String()}.$fileExt';
-        final filePath = fileName;
-        await MyApp.supabase.storage.from('photo_video_pub').uploadBinary(
-              filePath,
-              bytes,
-              fileOptions: FileOptions(contentType: imageFile.mimeType),
-            );
-        videos.add(await MyApp.supabase.storage
-            .from('photo_video_pub')
-            .createSignedUrl(filePath, 60 * 60 * 24 * 365 * 10));
-        //widget.onUpload(imageUrlResponse);
-      } on StorageException catch (error) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(error.message),
-              backgroundColor: Theme.of(context).colorScheme.error,
-            ),
-          );
-        }
-      } catch (error) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text('Unexpected error occurred'),
-              backgroundColor: Theme.of(context).colorScheme.error,
-            ),
-          );
-        }
-      }
-    }
-
-    //setState(() => _isLoading = false);
   }
 
   @override
@@ -156,7 +110,7 @@ class _PublicationPageState extends State<PublicationPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: () {
             showAboutDialog(context: context, children: [
               SizedBox(
@@ -168,29 +122,23 @@ class _PublicationPageState extends State<PublicationPage> {
                     children: [
                       ElevatedButton.icon(
                         onPressed: _uploadImage,
-                        icon: Icon(Icons.photo),
-                        label: Text('Ajouter une photo'),
+                        icon: const Icon(Icons.photo),
+                        label: const Text('Ajouter une photo'),
                       ),
-                      // SizedBox(height: 8),
-                      // ElevatedButton.icon(
-                      //   onPressed: _uploadVideo,
-                      //   icon: Icon(Icons.videocam),
-                      //   label: Text('Ajouter une vidéo'),
-                      // ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       TextFormField(
                         controller: informationController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Exprimez-vous...',
                           border: OutlineInputBorder(),
                           contentPadding: EdgeInsets.all(12),
                         ),
                         maxLines: 4,
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () {
-                          final id = Uuid().v4();
+                          final id = const Uuid().v4();
                           Publication newPublication = Publication(
                             date: DateTime.now(),
                             idPublication: id,
@@ -212,7 +160,7 @@ class _PublicationPageState extends State<PublicationPage> {
                           }
                           //Navigator.pop(context);
                         },
-                        child: Text('Publier'),
+                        child: const Text('Publier'),
                       ),
                     ],
                   ),

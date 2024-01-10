@@ -25,9 +25,9 @@ class _FacultyPageState extends State<FacultyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Facultés")),
+      appBar: AppBar(title: const Text("Facultés")),
       body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 16.0,
           mainAxisSpacing: 16.0,
@@ -39,7 +39,7 @@ class _FacultyPageState extends State<FacultyPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => FiliereFacultePage()));
+                        builder: (context) => const FiliereFacultePage()));
               },
               child: FaculterCard(faculte: facultes[index]));
         },
@@ -72,7 +72,7 @@ class FaculterCard extends StatelessWidget {
               children: [
                 Text(
                   faculte.nom,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(faculte.sigle),
                 Text(faculte.description),

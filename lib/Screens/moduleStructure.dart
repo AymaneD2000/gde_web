@@ -1,48 +1,8 @@
-// import 'package:flutter/material.dart';
-// import 'package:gde_web/Screens/addModuleStructurePage.dart';
-
-// class StructureModule extends StatefulWidget {
-//   const StructureModule({super.key});
-
-//   @override
-//   State<StructureModule> createState() => _StructureModuleState();
-// }
-
-// class _StructureModuleState extends State<StructureModule> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Container(
-//         child: Column(
-//           children: [
-//             GestureDetector(
-//               child: IconButton(
-//                 icon: Icon(Icons.add_a_photo),
-//                 onPressed: () {
-// Navigator.push(
-//     context,
-//     MaterialPageRoute(
-//         builder: (context) => AjouterModulePage()));
-//                 },
-//               ),
-//             )
-//           ],
-//         ),
-//       ),
-//       floatingActionButton: Container(
-//         child: IconButton(
-//           icon: Icon(Icons.add),
-//           onPressed: () {},
-//         ),
-//       ),
-//     );
-//   }
-// }
+// ignore_for_file: must_be_immutable, library_private_types_in_public_api
 
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gde_web/Screens/addModuleStructurePage.dart';
 import 'package:gde_web/main.dart';
 import 'package:gde_web/models/formation.dart';
 import 'package:gde_web/supabase/supabase_managements.dart';

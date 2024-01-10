@@ -5,6 +5,7 @@ class GenderFormField extends StatelessWidget {
   final ValueChanged<String?> onChanged;
 
   const GenderFormField({
+    super.key,
     required this.gender,
     required this.onChanged,
   });
@@ -14,12 +15,12 @@ class GenderFormField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 10),
-        Text(
+        const SizedBox(height: 10),
+        const Text(
           'Gender',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Row(
           children: [
             Radio<String>(
@@ -27,14 +28,14 @@ class GenderFormField extends StatelessWidget {
               groupValue: gender,
               onChanged: onChanged,
             ),
-            Text("Man"),
-            SizedBox(width: 20),
+            const Text("Man"),
+            const SizedBox(width: 20),
             Radio<String>(
               value: "Woman",
               groupValue: gender,
               onChanged: onChanged,
             ),
-            Text("Woman"),
+            const Text("Woman"),
           ],
         ),
       ],

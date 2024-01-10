@@ -8,6 +8,8 @@ import 'package:gde_web/supabase/supabase_managements.dart';
 import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -31,8 +33,8 @@ class _LoginPageState extends State<LoginPage> {
         //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SizedBox(
-            child: Image.asset("assets/Ellipse 35.png"),
             width: MediaQuery.of(context).size.width * 0.45,
+            child: Image.asset("assets/Ellipse 35.png"),
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.45,
@@ -40,10 +42,10 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   SizedBox(
                       height: 90, child: Image.asset("assets/G.D.E image.jpg")),
-                  Spacer(),
+                  const Spacer(),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.7,
                     child: Card(
@@ -59,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                               color: Color(0xFF00A8E7),
                             ),
                           ),
-                          Text(
+                          const Text(
                             "Connectez-vous pour accéder à votre espace",
                             style: TextStyle(color: Color(0xFF474749)),
                           ),
@@ -71,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                                 labelText: 'E-mail',
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10)),
-                                suffixIcon: Icon(Icons.mail),
+                                suffixIcon: const Icon(Icons.mail),
                               ),
                             ),
                           ),
@@ -86,7 +88,8 @@ class _LoginPageState extends State<LoginPage> {
                                 labelText: 'Mot de passe',
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10)),
-                                suffixIcon: Icon(Icons.remove_red_eye_sharp),
+                                suffixIcon:
+                                    const Icon(Icons.remove_red_eye_sharp),
                               ),
                               obscureText: false,
                             ),
@@ -136,11 +139,11 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           ElevatedButton(
                             style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
-                                    Color(0xFF00A8E7))),
+                                    const Color(0xFF00A8E7))),
                             onPressed: () async {
                               bool isTrue = false;
                               if (val == "Faculte") {
@@ -178,18 +181,18 @@ class _LoginPageState extends State<LoginPage> {
                                   TextStyle(color: Colors.white, fontSize: 22),
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Vous n'avez pas de compte ?"),
+                              const Text("Vous n'avez pas de compte ?"),
                               GestureDetector(
                                   onTap: () {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                RegistrationPage()));
+                                                const RegistrationPage()));
                                   },
                                   child: const Text(
                                     " Inscrivez-vous ici.",

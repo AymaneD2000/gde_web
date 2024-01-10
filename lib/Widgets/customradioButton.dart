@@ -7,6 +7,7 @@ class CustomRadio extends StatelessWidget {
   final Function(String?) onChanged;
 
   const CustomRadio({
+    super.key,
     required this.label,
     required this.value,
     required this.groupValue,
@@ -22,7 +23,7 @@ class CustomRadio extends StatelessWidget {
           value: value,
           groupValue: groupValue,
           onChanged: (newValue) {
-            onChanged(newValue as String?);
+            onChanged(newValue);
           },
         ),
       ],

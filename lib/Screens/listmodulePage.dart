@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:gde_web/Screens/addModuleStructurePage.dart';
 import 'package:gde_web/Screens/moduleStructure.dart';
@@ -26,11 +28,11 @@ class _ListeModulesPageState extends State<ListeModulesPage> {
             .getModules(), // Assurez-vous d'avoir une méthode getModules pour récupérer la liste des modules
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Erreur: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('Aucun module trouvé.'));
+            return const Center(child: Text('Aucun module trouvé.'));
           } else {
             return ListView.builder(
               itemCount: snapshot.data!.length,
@@ -49,7 +51,7 @@ class _ListeModulesPageState extends State<ListeModulesPage> {
                     );
                   },
                   child: Card(
-                    margin: EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -72,15 +74,15 @@ class _ListeModulesPageState extends State<ListeModulesPage> {
                                 children: [
                                   Text(
                                     module.nom,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 18.0,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 4.0),
+                                  const SizedBox(height: 4.0),
                                   Text(
                                     module.description,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16.0,
                                     ),
                                   ),
@@ -93,7 +95,7 @@ class _ListeModulesPageState extends State<ListeModulesPage> {
                                     c.deleteStructureModule(module);
                                   });
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.delete,
                                   color: Colors.red,
                                 ))
@@ -112,10 +114,12 @@ class _ListeModulesPageState extends State<ListeModulesPage> {
           decoration: BoxDecoration(
               color: Colors.blue, borderRadius: BorderRadius.circular(40)),
           child: IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AjouterModulePage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AjouterModulePage()));
             },
           )),
     );
