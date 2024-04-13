@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   const Spacer(),
                   SizedBox(
-                      height: 90, child: Image.asset("assets/G.D.E image.jpg")),
+                      height: 90, child: Image.asset("assets/gdeLasticon.jpg")),
                   const Spacer(),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.7,

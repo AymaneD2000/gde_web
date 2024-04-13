@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Expanded(
                   child: buildDrawerItem(
-                      "assets/Mortarboard.png", "Manage Structure", 2),
+                      "assets/Mortarboard.png", "Informations Structure", 2),
                 ),
                 Expanded(
                   child: buildDrawerItem(

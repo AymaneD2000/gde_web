@@ -1,8 +1,5 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
-import 'package:gde_web/Screens/publication.dart';
-import 'package:gde_web/Widgets/publicationwidget.dart';
+import 'package:gde_web/Screens/HomeScreen.dart';
 import 'package:gde_web/main.dart';
 import 'package:gde_web/models/Poste.dart';
 import 'package:gde_web/supabase/supabase_managements.dart';
@@ -11,14 +8,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
-class PublicationPage extends StatefulWidget {
-  const PublicationPage({super.key});
+class Pub extends StatefulWidget {
+  const Pub({super.key});
 
   @override
-  _PublicationPageState createState() => _PublicationPageState();
+  State<Pub> createState() => _PubState();
 }
 
-class _PublicationPageState extends State<PublicationPage> {
+class _PubState extends State<Pub> {
   TextEditingController informationController = TextEditingController();
   List<String> photos = [];
   List<String> videos = [];
@@ -75,59 +72,64 @@ class _PublicationPageState extends State<PublicationPage> {
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    uploadPubliciter();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    uploadPubliciter();
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('Nouvelle publication'),
+        title: Text("Nouvelle publication"),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: FutureBuilder(
-                future: c.admin.first.structure == null
-                    ? c.getFacultePublication(c.admin.first.idfaculte!)
-                    : c.getPublication(c.admin.first.structure_id!),
-                builder: (context, snapshot) {
-                  final pub = snapshot.data;
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      itemCount: pub == null ? 0 : pub.length,
-                      itemBuilder: (context, index) {
-                        return PublicationWidget(
-                          structureNom: c.admin.first.structure == null
-                              ? c.admin.first.faculter!.nom
-                              : c.admin.first.structure!.nom,
-                          structureLogo: c.admin.first.structure == null
-                              ? c.admin.first.faculter!.image
-                              : c.admin.first.structure!.logo,
-                          publication: pub![pub.length - index - 1],
-                          username: c.admin.first.username,
-                        );
-                      },
+      body: Center(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: _uploadImage,
+                  icon: const Icon(Icons.photo),
+                  label: const Text('Ajouter une photo'),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: informationController,
+                  decoration: const InputDecoration(
+                    labelText: 'Exprimez-vous...',
+                    border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.all(12),
+                  ),
+                  maxLines: 4,
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    final id = const Uuid().v4();
+                    Publication newPublication = Publication(
+                      date: DateTime.now(),
+                      idPublication: id,
+                      information: informationController.text,
                     );
-                  } else {
-                    return SizedBox(
-                        child: Center(child: CircularProgressIndicator()));
-                  }
-                }),
+                    try {
+                      c.admin.first.structure == null
+                          ? c.addFacultePublication(newPublication,
+                              c.admin.first.idfaculte!, photos, videos)
+                          : c.addPublication(newPublication,
+                              c.admin.first.structure_id!, photos, videos);
+                      pubs.add(newPublication);
+                      setState(() {});
+                    } catch (e) {
+                      print(e);
+                    }
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                  },
+                  child: const Text('Publier'),
+                ),
+              ],
+            ),
           ),
-        ],
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => const Pub()));
-          }),
     );
   }
 }

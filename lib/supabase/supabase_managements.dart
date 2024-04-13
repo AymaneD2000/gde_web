@@ -281,7 +281,8 @@ class supabse_managemet extends GetxController {
     for (final i in ad) {
       list.add(Publication.fromJson(i));
     }
-    final a = list;
+    List<Publication> a = [];
+    a = list;
     for (final i in a) {
       final img = await MyApp.supabase
           .from("image")
@@ -313,7 +314,8 @@ class supabse_managemet extends GetxController {
     for (final i in ad) {
       list.add(Publication.fromJson(i));
     }
-    List<Publication> a = list;
+    List<Publication> a = [];
+    a = list;
     for (final i in a) {
       final img = await MyApp.supabase
           .from("image")

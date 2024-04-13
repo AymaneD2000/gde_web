@@ -137,7 +137,7 @@ class _FiliereFacultePageState extends State<FiliereFacultePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        isAdded ? 'Ajouté à l\'université' : 'Non ajouté',
+                        isAdded ? 'Ajouté' : 'Non ajouté',
                         style: TextStyle(
                           color: isAdded ? Colors.green : Colors.red,
                           fontWeight: FontWeight.bold,
@@ -169,7 +169,15 @@ class _FiliereFacultePageState extends State<FiliereFacultePage> {
                               context: context,
                               builder: (context) {
                                 return OptionsFacultePage(
-                                    filiere, faculte.idfaculter);
+                                  filiere,
+                                  faculte.idfaculter,
+                                  () {
+                                    // Fonction de mise à jour des données appelée chaque fois qu'un changement est effectué
+                                    setState(() {
+                                      _loadData();
+                                    });
+                                  },
+                                );
                               });
                           setState(() {});
                         },

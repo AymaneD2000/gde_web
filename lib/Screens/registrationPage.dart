@@ -92,7 +92,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             child: Column(
               children: [
                 SizedBox(
-                    height: 90, child: Image.asset("assets/G.D.E image.jpg")),
+                    height: 90, child: Image.asset("assets/gdeLasticon.jpg")),
                 const Text(
                   "Page d'Inscription",
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),

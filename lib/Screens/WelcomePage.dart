@@ -101,13 +101,11 @@ class _WelcomePageState extends State<WelcomePage> {
                                 child: _buildImageGrid(context))),
                         Text(
                             supabaseManagement.publiciter.isNotEmpty
-                                ? supabaseManagement
-                                    .publiciter.first.information
+                                ? supabaseManagement.publiciter.last.information
                                 : "",
                             style: const TextStyle(fontSize: 18)),
                         Text(supabaseManagement.publiciter.isNotEmpty
-                            ? supabaseManagement.publiciter.first.date
-                                .toString()
+                            ? supabaseManagement.publiciter.last.date.toString()
                             : "")
                       ],
                     ),
@@ -166,21 +164,21 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   Widget _buildImageGrid(BuildContext context) {
-    if (supabaseManagement.publiciter.first.photo != null &&
-        supabaseManagement.publiciter.first.photo!.isNotEmpty) {
+    if (supabaseManagement.publiciter.last.photo != null &&
+        supabaseManagement.publiciter.last.photo!.isNotEmpty) {
       return Wrap(
         spacing: 6.0,
         runSpacing: 8.0,
-        children: supabaseManagement.publiciter.first.photo!.map((imageUrl) {
+        children: supabaseManagement.publiciter.last.photo!.map((imageUrl) {
           return ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.network(
               imageUrl.photo,
               fit: BoxFit.cover,
               width: (MediaQuery.of(context).size.width - 45) /
-                  min(supabaseManagement.publiciter.first.photo!.length, 3),
+                  min(supabaseManagement.publiciter.last.photo!.length, 3),
               height: (MediaQuery.of(context).size.width - 45) /
-                  min(supabaseManagement.publiciter.first.photo!.length, 3),
+                  min(supabaseManagement.publiciter.last.photo!.length, 3),
             ),
           );
         }).toList(),

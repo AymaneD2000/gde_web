@@ -8,7 +8,10 @@ import 'package:get/get.dart';
 class OptionsFacultePage extends StatefulWidget {
   final Filiere filiere;
   final int idStructure;
-  const OptionsFacultePage(this.filiere, this.idStructure, {super.key});
+  final Function onOptionsChanged; // Ajoutez cette ligne
+  const OptionsFacultePage(
+      this.filiere, this.idStructure, this.onOptionsChanged,
+      {super.key});
 
   @override
   _OptionsFacultePageState createState() => _OptionsFacultePageState();
@@ -75,6 +78,8 @@ class _OptionsFacultePageState extends State<OptionsFacultePage> {
                           }
                           // Mettez à jour la liste d'options après l'ajout/suppression
                           setState(() {});
+                          // Appelez la fonction de mise à jour des options de FiliereFacultePage
+                          widget.onOptionsChanged();
                         },
                       ),
                     ),
