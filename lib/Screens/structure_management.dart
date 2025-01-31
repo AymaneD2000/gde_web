@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:flutter/material.dart';
-import 'package:gde_web/Widgets/customTextForm.dart';
+import 'package:gde_web/Widgets/custom_text_form.dart';
 import 'package:gde_web/main.dart';
 import 'package:gde_web/models/Structure.dart';
 import 'package:gde_web/models/faculter_model.dart';
@@ -13,7 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UpdateFaculterPage extends StatefulWidget {
-  const UpdateFaculterPage();
+  const UpdateFaculterPage({super.key});
 
   @override
   _UpdateFaculterPageState createState() => _UpdateFaculterPageState();
@@ -159,7 +159,10 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                 try {
                   c.updateFaculter(adminStructure);
                 } catch (e) {
-                  print("this is sppabase erro $e");
+                  SnackBar(
+                    content: Text("this is sppabase erro $e"),
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                  );
                 }
               } else {
                 Structure adminStructure = Structure(
@@ -176,7 +179,10 @@ class _UpdateFaculterPageState extends State<UpdateFaculterPage> {
                 try {
                   c.updateStructure(adminStructure);
                 } catch (e) {
-                  print("this is sppabase erro $e");
+                  SnackBar(
+                    content: Text("this is sppabase erro $e"),
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                  );
                 }
               }
             },

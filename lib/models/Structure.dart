@@ -1,5 +1,5 @@
-import 'package:gde_web/models/Options.dart';
-import 'package:gde_web/models/Poste.dart';
+import 'package:gde_web/models/options.dart';
+import 'package:gde_web/models/poste.dart';
 import 'package:gde_web/models/faculter_model.dart';
 import 'package:gde_web/models/formation.dart';
 

@@ -3,13 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:gde_web/Screens/publication.dart';
 import 'package:gde_web/Widgets/publicationwidget.dart';
-import 'package:gde_web/main.dart';
-import 'package:gde_web/models/Poste.dart';
+import 'package:gde_web/models/poste.dart';
 import 'package:gde_web/supabase/supabase_managements.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:uuid/uuid.dart';
 
 class PublicationPage extends StatefulWidget {
   const PublicationPage({super.key});
@@ -28,51 +24,6 @@ class _PublicationPageState extends State<PublicationPage> {
     pubs = c.publiciter;
   }
 
-  Future<void> _uploadImage() async {
-    final picker = ImagePicker();
-
-    final lifFile = await picker.pickMultiImage(maxWidth: 300, maxHeight: 300);
-    if (lifFile == []) {
-      return;
-    }
-    //setState(() => _isLoading = true);
-    for (final imageFile in lifFile) {
-      try {
-        final bytes = await imageFile.readAsBytes();
-        final fileExt = imageFile.path.split('.').last;
-        final fileName = '${DateTime.now().toIso8601String()}.$fileExt';
-        final filePath = fileName;
-        await MyApp.supabase.storage.from('photo_video_pub').uploadBinary(
-              filePath,
-              bytes,
-              fileOptions: FileOptions(contentType: imageFile.mimeType),
-            );
-        photos.add(await MyApp.supabase.storage
-            .from('photo_video_pub')
-            .createSignedUrl(filePath, 60 * 60 * 24 * 365 * 10));
-        //widget.onUpload(imageUrlResponse);
-        //print(photos.length);
-      } on StorageException catch (error) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(error.message),
-              backgroundColor: Theme.of(context).colorScheme.error,
-            ),
-          );
-        }
-      } catch (error) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text('Unexpected error occurred'),
-              backgroundColor: Theme.of(context).colorScheme.error,
-            ),
-          );
-        }
-      }
-    }
-  }
 
   @override
   void initState() {
@@ -95,7 +46,7 @@ class _PublicationPageState extends State<PublicationPage> {
             child: FutureBuilder(
                 future: c.admin.first.structure == null
                     ? c.getFacultePublication(c.admin.first.idfaculte!)
-                    : c.getPublication(c.admin.first.structure_id!),
+                    : c.getPublication(c.admin.first.structureId!),
                 builder: (context, snapshot) {
                   final pub = snapshot.data;
                   if (snapshot.hasData) {
@@ -115,7 +66,7 @@ class _PublicationPageState extends State<PublicationPage> {
                       },
                     );
                   } else {
-                    return SizedBox(
+                    return const SizedBox(
                         child: Center(child: CircularProgressIndicator()));
                   }
                 }),

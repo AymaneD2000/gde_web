@@ -1,9 +1,9 @@
 class FaculteFiliere {
-  int faculte_id;
-  int filiere_id;
-  FaculteFiliere({required this.faculte_id, required this.filiere_id});
+  int faculteId;
+  int filiereId;
+  FaculteFiliere({required this.faculteId, required this.filiereId});
   factory FaculteFiliere.fromJson(Map<String, dynamic> json) {
     return FaculteFiliere(
-        faculte_id: json["faculte_id"], filiere_id: json["filiere_id"]);
+        faculteId: json["faculte_id"], filiereId: json["filiere_id"]);
   }
 }

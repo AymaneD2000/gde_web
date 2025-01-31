@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gde_web/Screens/HomeScreen.dart';
+import 'package:gde_web/Screens/home_screen.dart';
 import 'package:gde_web/main.dart';
-import 'package:gde_web/models/Poste.dart';
+import 'package:gde_web/models/poste.dart';
 import 'package:gde_web/supabase/supabase_managements.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -75,7 +75,7 @@ class _PubState extends State<Pub> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Nouvelle publication"),
+        title: const Text("Nouvelle publication"),
       ),
       body: Center(
         child: SizedBox(
@@ -114,14 +114,17 @@ class _PubState extends State<Pub> {
                           ? c.addFacultePublication(newPublication,
                               c.admin.first.idfaculte!, photos, videos)
                           : c.addPublication(newPublication,
-                              c.admin.first.structure_id!, photos, videos);
+                              c.admin.first.structureId!, photos, videos);
                       pubs.add(newPublication);
                       setState(() {});
                     } catch (e) {
-                      print(e);
+                      SnackBar(
+                        content: const Text('Une erreur inattendue est survenue'),
+                        backgroundColor: Theme.of(context).colorScheme.error,
+                      );
                     }
                     Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                        MaterialPageRoute(builder: (context) => const HomeScreen()));
                   },
                   child: const Text('Publier'),
                 ),

@@ -10,8 +10,8 @@ class AdminStructure {
   String email;
   String genre;
   String telephone;
-  String? Photo;
-  int? structure_id;
+  String? photo;
+  int? structureId;
   int? idfaculte;
   Structure? structure;
   Faculter? faculter;
@@ -25,9 +25,9 @@ class AdminStructure {
       required this.password,
       required this.email,
       required this.genre,
-      this.structure_id,
+      this.structureId,
       required this.telephone,
-      this.Photo});
+      this.photo});
 
   // toJson method to convert AdminStructure object to a Map
   Map<String, dynamic> toJson() {
@@ -39,17 +39,16 @@ class AdminStructure {
       'email': email,
       'genre': genre,
       'telephone': telephone,
-      'avatar_url': Photo ?? "",
-      'structure_id': structure_id,
+      'avatar_url': photo ?? "",
+      'structure_id': structureId,
       //structure?.toJson(), // Assuming Structure has a toJson method
     };
   }
 
   // fromJson method to create an AdminStructure object from a Map
   factory AdminStructure.fromJson(Map<String, dynamic> json) {
-    print(json);
     return AdminStructure(
-        structure_id: json['strucuture_id'],
+        structureId: json['strucuture_id'],
         username: json['username'],
         nom: json['nom'],
         prenom: json['prenom'],
@@ -57,7 +56,7 @@ class AdminStructure {
         email: json['email'],
         genre: json['genre'],
         telephone: json['telephone'],
-        Photo: json['avatar_url'],
+        photo: json['avatar_url'],
         idfaculte: json['faculter_id']
         //structure: Structure.fromJson(json['structure']),
         );

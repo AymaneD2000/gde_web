@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   supabase_flutter: ^1.10.25
   flutter_form_builder: ^9.1.1
-  image_picker: any
+  image_picker: ^1.1.2
   uuid: ^4.0.0
   get: ^4.6.6
   google_maps_flutter: any

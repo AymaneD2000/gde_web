@@ -1,8 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:gde_web/Screens/addModuleStructurePage.dart';
-import 'package:gde_web/Screens/moduleStructure.dart';
+import 'package:gde_web/Screens/add_module_structure_page.dart';
+import 'package:gde_web/Screens/module_structure.dart';
 import 'package:gde_web/models/formation.dart';
 import 'package:gde_web/supabase/supabase_managements.dart';
 import 'package:get/get.dart';

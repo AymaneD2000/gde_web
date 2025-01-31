@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gde_web/Screens/filiereFaculte.dart';
+import 'package:gde_web/Screens/filiere_faculte.dart';
 import 'package:gde_web/models/faculter_model.dart';
 import 'package:gde_web/supabase/supabase_managements.dart';
 import 'package:get/get.dart';

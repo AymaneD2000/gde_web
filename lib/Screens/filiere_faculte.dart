@@ -1,27 +1,27 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:gde_web/Screens/optionsStructure.dart';
+import 'package:gde_web/Screens/options_faculte.dart';
+import 'package:gde_web/models/faculte_filiere.dart';
+import 'package:gde_web/models/faculter_model.dart';
 import 'package:gde_web/models/filiere.dart';
-import 'package:gde_web/models/filiere_structure.dart';
 import 'package:gde_web/supabase/supabase_managements.dart';
 import 'package:get/get.dart';
 
-class FiliereStructurePage extends StatefulWidget {
-  const FiliereStructurePage({super.key});
-
+class FiliereFacultePage extends StatefulWidget {
+  const FiliereFacultePage({super.key});
   @override
-  State<FiliereStructurePage> createState() => _FiliereStructurePageState();
+  State<FiliereFacultePage> createState() => _FiliereFacultePageState();
 }
 
-class _FiliereStructurePageState extends State<FiliereStructurePage> {
+class _FiliereFacultePageState extends State<FiliereFacultePage> {
   final supabse_managemet c = Get.put(supabse_managemet());
   List<Filiere> filieres = [];
-  List<FiliereStructure> filieres_structure = [];
+  List<FaculteFiliere> filieresfaculte = [];
   Future<void> _loadData() async {
     setState(() {
       // Mettez à jour les filières après le chargement des données
       filieres = c.filiers;
-      filieres_structure = c.filierestructure;
+      filieresfaculte = c.faculteFiliere;
     });
   }
 
@@ -37,6 +37,7 @@ class _FiliereStructurePageState extends State<FiliereStructurePage> {
     _loadData();
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: const Text('Filières et Options'),
         ),
         body: DynamicHeightGridView(
@@ -45,7 +46,8 @@ class _FiliereStructurePageState extends State<FiliereStructurePage> {
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
             builder: (ctx, index) {
-              return _buildFiliereCard(filieres[index]);
+              return _buildFiliereCard(
+                  filieres[index], c.admin.first.faculter!);
             })
 
         // GridView.builder(
@@ -62,11 +64,11 @@ class _FiliereStructurePageState extends State<FiliereStructurePage> {
         );
   }
 
-  Widget _buildFiliereCard(Filiere filiere) {
+  Widget _buildFiliereCard(Filiere filiere, Faculter faculte) {
     bool isAdded = false;
-    for (var element in filieres_structure) {
-      if (element.id_filiere == filiere.id &&
-          element.id_structure == c.admin.first.structure_id) {
+    for (var element in filieresfaculte) {
+      if (element.filiereId == filiere.id &&
+          element.faculteId == faculte.idfaculter) {
         isAdded = true;
       }
     }
@@ -104,14 +106,14 @@ class _FiliereStructurePageState extends State<FiliereStructurePage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.15,
                   child: ListView.builder(
-                      itemCount: filiere.list_option!.length,
+                      itemCount: filiere.listOption!.length,
                       itemBuilder: (context, index) {
-                        final option = filiere.list_option!;
+                        final option = filiere.listOption!;
                         //bool optAded = false;
-                        final optAded = c.optionsStructure.any(
+                        final optAded = c.faculteOptions.any(
                           (i) =>
-                              i.id_options == option[index].id &&
-                              i.id_structure == c.admin.first.structure_id,
+                              i.optionsId == option[index].id &&
+                              i.faculteId == faculte.idfaculter,
                         );
                         return Row(
                           children: [
@@ -144,13 +146,11 @@ class _FiliereStructurePageState extends State<FiliereStructurePage> {
                       ElevatedButton(
                         onPressed: () async {
                           if (isAdded == true) {
-                            await c.deleteFiliereStructure(
-                                filiere.id,
-                                c.admin.first.structure_id,
-                                filiere.list_option);
+                            await c.deleteFiliereFaculte(filiere.id,
+                                faculte.idfaculter, filiere.listOption);
                           } else {
-                            await c.addFiliereStructure(
-                                filiere.id, c.admin.first.structure_id);
+                            await c.addFiliereFaculte(
+                                filiere.id, faculte.idfaculter);
                           }
                           // Mettez à jour la liste de filières après l'ajout/suppression
                           await _loadData();
@@ -168,8 +168,16 @@ class _FiliereStructurePageState extends State<FiliereStructurePage> {
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return OptionsPage(
-                                    filiere, c.admin.first.structure_id!);
+                                return OptionsFacultePage(
+                                  filiere,
+                                  faculte.idfaculter,
+                                  () {
+                                    // Fonction de mise à jour des données appelée chaque fois qu'un changement est effectué
+                                    setState(() {
+                                      _loadData();
+                                    });
+                                  },
+                                );
                               });
                           setState(() {});
                         },

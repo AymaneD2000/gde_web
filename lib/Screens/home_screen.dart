@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gde_web/Screens/StructureManagement.dart';
-import 'package:gde_web/Screens/WelcomePage.dart';
-import 'package:gde_web/Screens/filiereFaculte.dart';
-import 'package:gde_web/Screens/filiersStructure.dart';
-import 'package:gde_web/Screens/listmodulePage.dart';
-import 'package:gde_web/Screens/pubpage.dart';
+import 'package:gde_web/Screens/structure_management.dart';
+import 'package:gde_web/Screens/welcome_page.dart';
+import 'package:gde_web/Screens/filiere_faculte.dart';
+import 'package:gde_web/Screens/filiers_structure.dart';
+import 'package:gde_web/Screens/list_module_page.dart';
+import 'package:gde_web/Screens/pub_page.dart';
 import 'package:gde_web/supabase/supabase_managements.dart';
 import 'package:get/get.dart';
 //import 'package:image_network/image_network.dart';
@@ -22,8 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
     const WelcomePage(),
     const PublicationPage(),
     const UpdateFaculterPage(),
-    FiliereStructurePage(),
-    FiliereFacultePage(),
+    const FiliereStructurePage(),
+    const FiliereFacultePage(),
     const ListeModulesPage()
   ];
 
@@ -165,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(20)),
                               width: 50,
                               height: 50,
-                              child: Image.network(c.admin.first.Photo!)),
+                              child: Image.network(c.admin.first.photo!)),
                         ),
                       )
                     ],

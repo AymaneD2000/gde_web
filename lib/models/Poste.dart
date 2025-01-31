@@ -1,9 +1,7 @@
-import 'package:gde_web/models/Structure.dart';
-import 'package:gde_web/models/Videos.dart';
 import 'package:gde_web/models/photos.dart';
-import 'package:intl/intl.dart';
-import 'package:uuid/uuid.dart';
 
+
+import 'package:intl/intl.dart';
 class Publication {
   String idPublication;
   String information;
@@ -33,7 +31,7 @@ class Publication {
   // fromJson method to create a Publication object from a Map
   factory Publication.fromJson(Map<String, dynamic> json) {
     DateTime temps = DateTime.parse(json["date"]);
-    String dat = DateFormat('dd/MM/yyyy à HH:mm:ss').format(temps);
+    DateFormat('dd/MM/yyyy à HH:mm:ss').format(temps);
     return Publication(
       //structure: null,
       date: DateTime.tryParse(json['date'])!,

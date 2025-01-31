@@ -12,7 +12,6 @@ class PubModel {
       required this.source});
 
   factory PubModel.fromJson(dynamic json) {
-    print(json);
     return PubModel(
         titre: json['Titre'],
         contenue: "description",

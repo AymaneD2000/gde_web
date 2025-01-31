@@ -1,7 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:gde_web/models/options.dart';
 import 'package:gde_web/models/filiere.dart';
 import 'package:gde_web/supabase/supabase_managements.dart';
 import 'package:get/get.dart';
@@ -39,13 +38,13 @@ class _OptionsPageState extends State<OptionsPage> {
             const SizedBox(height: 16.0),
             Expanded(
               child: ListView.builder(
-                itemCount: widget.filiere.list_option!.length,
+                itemCount: widget.filiere.listOption!.length,
                 itemBuilder: (context, index) {
-                  final option = widget.filiere.list_option![index];
+                  final option = widget.filiere.listOption![index];
                   final isAdded = c.optionsStructure.any(
                     (i) =>
-                        i.id_options == option.id &&
-                        i.id_structure == widget.idStructure,
+                        i.idOptions == option.id &&
+                        i.idStructure == widget.idStructure,
                   );
 
                   return Card(

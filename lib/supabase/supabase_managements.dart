@@ -1,11 +1,11 @@
 // ignore_for_file: camel_case_types, avoid_print
 
 import 'package:gde_web/main.dart';
-import 'package:gde_web/models/Options.dart';
-import 'package:gde_web/models/Poste.dart';
+import 'package:gde_web/models/options.dart';
+import 'package:gde_web/models/poste.dart';
 import 'package:gde_web/models/Structure.dart';
-import 'package:gde_web/models/Videos.dart';
-import 'package:gde_web/models/adminStructure.dart';
+import 'package:gde_web/models/videos.dart';
+import 'package:gde_web/models/admin_structure.dart';
 import 'package:gde_web/models/faculte_filiere.dart';
 import 'package:gde_web/models/faculte_options.dart';
 import 'package:gde_web/models/faculter_model.dart';
@@ -17,7 +17,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
-import '../models/optionsStructure.dart';
+import '../models/options_structure.dart';
 
 class supabse_managemet extends GetxController {
   List<AdminStructure> admin = <AdminStructure>[].obs;
@@ -93,7 +93,7 @@ class supabse_managemet extends GetxController {
     final module = await MyApp.supabase
         .from("module")
         .select("*")
-        .eq("id_ctf", admin.first.structure_id);
+        .eq("id_ctf", admin.first.structureId);
     for (final i in module) {
       lismodule.add(Formation.fromJson(i));
     }
@@ -466,7 +466,7 @@ class supabse_managemet extends GetxController {
       final listOptions = await f.map((e) {
         return Option.fromJson(e);
       }).toList();
-      a.list_option = listOptions;
+      a.listOption = listOptions;
       list.add(a);
     }
     return list;

@@ -1,4 +1,4 @@
-import 'package:gde_web/models/Poste.dart';
+import 'package:gde_web/models/poste.dart';
 
 class Faculter {
   int idfaculter;

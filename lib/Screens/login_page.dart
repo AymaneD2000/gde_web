@@ -1,9 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:gde_web/Screens/HomeScreen.dart';
-import 'package:gde_web/Screens/registrationPage.dart';
-import 'package:gde_web/Widgets/customradioButton.dart';
+import 'package:gde_web/Screens/home_screen.dart';
+import 'package:gde_web/Screens/registration_page.dart';
+import 'package:gde_web/Widgets/custom_radio_button.dart';
 import 'package:gde_web/supabase/supabase_managements.dart';
 import 'package:get/get.dart';
 
@@ -142,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                           const SizedBox(height: 20),
                           ElevatedButton(
                             style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
+                                backgroundColor: WidgetStateProperty.all(
                                     const Color(0xFF00A8E7))),
                             onPressed: () async {
                               bool isTrue = false;

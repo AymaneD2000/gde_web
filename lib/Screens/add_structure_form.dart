@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:gde_web/models/Structure.dart';
 
 class StructureForm extends StatefulWidget {
   const StructureForm({super.key});
@@ -59,8 +58,6 @@ class _StructureFormState extends State<StructureForm> {
                 onPressed: () {
                   if (_formKey.currentState!.saveAndValidate()) {
                     // Récupérer les valeurs du formulaire
-                    Map<String, dynamic> formData =
-                        _formKey.currentState!.value;
 
                     // Utiliser ces valeurs pour créer un objet Structure
                     // Structure newStructure = Structure(

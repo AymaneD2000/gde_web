@@ -41,13 +41,13 @@ class _OptionsFacultePageState extends State<OptionsFacultePage> {
             const SizedBox(height: 16.0),
             Expanded(
               child: ListView.builder(
-                itemCount: widget.filiere.list_option!.length,
+                itemCount: widget.filiere.listOption!.length,
                 itemBuilder: (context, index) {
-                  final option = widget.filiere.list_option![index];
+                  final option = widget.filiere.listOption![index];
                   final isAdded = c.faculteOptions.any(
                     (i) =>
-                        i.options_id == option.id &&
-                        i.faculte_id == widget.idStructure,
+                        i.optionsId == option.id &&
+                        i.faculteId == widget.idStructure,
                   );
 
                   return Card(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gde_web/Widgets/MyText.dart';
+import 'package:gde_web/Widgets/my_text.dart';
 import 'dart:math';
 
-import 'package:gde_web/models/Poste.dart';
+import 'package:gde_web/models/poste.dart';
 
 class PublicationWidget extends StatelessWidget {
   PublicationWidget({
@@ -27,7 +27,7 @@ class PublicationWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
+              color: Colors.grey.shade100,
               spreadRadius: 2,
               blurRadius: 5,
               offset: const Offset(0, 3),

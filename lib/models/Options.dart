@@ -2,13 +2,13 @@ class Option {
   int id;
   String denomination;
   String description;
-  int filiere_id;
+  int filiereId;
   String? image;
 
   Option({
     this.image,
     required this.id,
-    required this.filiere_id,
+    required this.filiereId,
     required this.denomination,
     required this.description,
   });
@@ -18,7 +18,7 @@ class Option {
     return {
       'denomination': denomination,
       'description': description,
-      'filiere_id': filiere_id,
+      'filiere_id': filiereId,
       'image': image,
     };
   }
@@ -29,7 +29,7 @@ class Option {
       id: json['id_option'],
       denomination: json['denomination'],
       description: json['description'],
-      filiere_id: json['filiere_id'],
+      filiereId: json['filiere_id'],
       image: json['image'],
     );
   }
@@ -37,6 +37,6 @@ class Option {
   // You can add a toString method for debugging purposes
   @override
   String toString() {
-    return 'Option(id: $id, denomination: $denomination, description: $description, filiere_id: $filiere_id, image: $image)';
+    return 'Option(id: $id, denomination: $denomination, description: $description, filiere_id: $filiereId, image: $image)';
   }
 }

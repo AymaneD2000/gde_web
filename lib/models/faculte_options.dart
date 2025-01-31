@@ -1,9 +1,9 @@
 class FaculteOptions {
-  int faculte_id;
-  int options_id;
-  FaculteOptions({required this.faculte_id, required this.options_id});
+  int faculteId;
+  int optionsId;
+  FaculteOptions({required this.faculteId, required this.optionsId});
   factory FaculteOptions.fromJson(Map<String, dynamic> json) {
     return FaculteOptions(
-        faculte_id: json["faculte_id"], options_id: json["option_id"]);
+        faculteId: json["faculte_id"], optionsId: json["option_id"]);
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gde_web/main.dart';
@@ -140,14 +138,17 @@ class _AjouterModulePageState extends State<AjouterModulePage> {
               onPressed: () {
                 try {
                   Formation formation = Formation(
-                      idCtf: c.admin.first.structure_id!,
+                      idCtf: c.admin.first.structureId!,
                       description: descriptionController.text,
                       nom: nomController.text,
                       image: _avatarUrl!,
                       duree: dureeController.text);
                   c.addStructureModule(formation);
                 } catch (e) {
-                  print(e);
+                  SnackBar(
+                    content: const Text('Une erreur inattendue est survenue'),
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                  );
                 }
                 //Navigator.pop(context);
               },

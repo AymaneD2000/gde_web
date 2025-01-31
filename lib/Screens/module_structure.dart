@@ -146,7 +146,7 @@ class _DisplayUpdateModulePageState extends State<DisplayUpdateModulePage> {
               onPressed: () {
                 try {
                   Formation formation = Formation(
-                    idCtf: c.admin.first.structure_id!,
+                    idCtf: c.admin.first.structureId!,
                     description: descriptionController.text,
                     nom: nomController.text,
                     image: _avatarUrl!,
@@ -158,7 +158,10 @@ class _DisplayUpdateModulePageState extends State<DisplayUpdateModulePage> {
                   });
                   Navigator.pop(context);
                 } catch (e) {
-                  print(e);
+                  SnackBar(
+                    content: const Text('Une erreur inattendue est survenue'),
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                  );
                 }
               },
               child: const Text('Mettre à jour'),

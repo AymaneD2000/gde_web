@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gde_web/Widgets/genderSelectableform.dart';
 import 'package:gde_web/Widgets/textformfield.dart';
 import 'package:gde_web/main.dart';
-import 'package:gde_web/models/AdminStructure.dart';
+import 'package:gde_web/models/admin_structure.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -272,14 +272,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                     prenom: prenomController.text,
                                     genre: genreController.text,
                                     telephone: telephoneController.text,
-                                    Photo: _avatarUrl ?? "",
+                                    photo: _avatarUrl ?? "",
                                   );
                                   try {
                                     MyApp.supabase
                                         .from('admin')
                                         .insert(adminStructure.toJson());
                                   } catch (e) {
-                                    print("this is sppabase erro $e");
+                                    SnackBar(
+                                      content: const Text(
+                                          'An unexpected error occurred'),
+                                      backgroundColor:
+                                          Theme.of(context).colorScheme.error,
+                                    );
                                   }
                                   Navigator.pop(context);
                                 }
@@ -297,8 +302,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
           ),
         ),
         SizedBox(
-          child: Image.asset("assets/Rectangle 11.png"),
           width: MediaQuery.of(context).size.width * 0.3,
+          child: Image.asset("assets/Rectangle 11.png"),
         ),
       ],
     ));
